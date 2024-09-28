@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%=Title%></title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <body>
+    <div id="head"></div>
+    <h1><%= title %></h1>
+    <p>Welcome to The <%= title %></p>
+    <a href="https://oauth.groupme.com/oauth/authorize?client_id=9qAyyvBjOrPsvkrrFA6Lgmq3I5g5kvPqquGIVkYv4lOoMDXi">Log In</a>
+    <div>
+      <form action="/" method="post" id="searchForm">
+        <% if (groups) { %>
+        <label for="groupMeId">Choose a Groupme:</label>
+        <select name="groupMeId" id="groupMeId">
+          <% groups.forEach(function(group) { %>
+            <option value="<%= group.id %>" <%= group.id == groupMeId ? 'selected' : '' %>><%= group.name %></option>
+          <% }); %>
+        </select>
+        <br />
+        <% }; %>
+        <label for="authorName">Search by author:</label>
+        <input type="text" id="authorName" name="authorName" placeholder="Start typing..." value="<%= authorName %>"/>
+        <ul id="suggestions" style="list-style-type: none;"></ul>
+        <label for="searchText">Search text:</label>
+        <input type="text" id="searchText" name="searchText" value="<%= searchText %>"/>
+        <br />
+        <label for="afterDate">Search "after" date</label>
+        <input type="date" id="afterDate" name="afterDate" value="<%= afterDate %>"/>
+        <br />
+        <label for="beforeDate">Search "before" date</label>
+        <input type="date" id="beforeDate" name="beforeDate" value="<%= beforeDate %>"/>
+        <br />
+        <label for="rank">Rank by likes?</label>
+        <select name="rank" id="rank">
+          <option value="yes" <%= rank == 'true' || rank == null ? 'selected' : '' %>>Yes</option>
+          <option value="no" <%= rank == 'false' ? 'selected' : '' %>>No</option>
+        </select>
+        <button type="submit" onclick="addSearchTextToUrl()">Submit</button>
+      </form>
+    </div>
+    <div id="resultsContainer">
+      <% if(result == ""){ %>
+        <h3>No results!</h3>
+      <% } %>
+      <% if (result && result != "") { %>
+      <div id="result">
+        <% for(let i = 0; i < Math.min(10, result.length); i++) { %>
+        <div class="result-item">
+          <% if (rank) { %>
+          <h2><%= i+1 %></h2>
+          <% } %>
+          <div class="result-content">
+            <p><%= result[i].date %></p>
+            <b><%= result[i].author %></b>
+            <div>
+              <% if (result[i].text != null && result[i].text.substring(0, 4)!="http") { %>
+              <p><%= result[i].text %></p>
+              <% } %>
+              <% if (result[i].text == null) { %>
+              <a href="<%= result[i].img %>" target="_blank" rel="noopener noreferrer">Link to img</a>
+              <br />
+              <% } %>
+              <% if (result[i].text!=null && result[i].text.substring(0, 4)=="http") { %>
+              <a href="<%= result[i].text %>" target="_blank" rel="noopener noreferrer">Link to video</a>
+              <br />
+              <% } %>
+            </div>
+            <p style="color: blue">Likes: <%= result[i].likes %></p>
+          </div>
+          <a href="/incontext?messageId=<%=result[i].id%>&messageAfter=<%=result[i].messageAfter%>">Context</a>
+        </div>
+        <% } %>
+      </div>
+      <% } %>
+    </div>
+    <script>
+      // Autocomplete suggestions
+      document.getElementById('authorName').addEventListener('input', function() {
+        const inputElement = this;
+        const input = this.value;
+        if (input.length > 0) {
+          fetch(`/autocomplete?q=${encodeURIComponent(input)}`)
+            .then(response => response.json())
+            .then(data => {
+              const suggestionsList = document.getElementById('suggestions');
+              suggestionsList.innerHTML = '';
+              data.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                li.style.cursor = 'pointer';
+                li.onclick = function() {
+                  inputElement.value = this.textContent;
+                  suggestionsList.innerHTML = '';
+                };
+                suggestionsList.appendChild(li);
+              });
+            })
+            .catch(error => console.error('Error fetching suggestions:', error));
+        } else {
+          document.getElementById('suggestions').innerHTML = '';
+        }
+      });
+
+      // Highlight search text
+      function addSearchTextToUrl() {
+        const searchText = document.getElementById('searchText').value;
+        const form = document.querySelector('form');
+        const url = new URL(form.action, window.location.origin);
+        if(searchText != ""){
+          url.searchParams.set('searchText', searchText);
+          form.action = url.toString();
+        }
+      }
+
+      const searchText = '<%= searchText %>';
+      const resultElements = document.querySelectorAll('.result-content p');
+
+      resultElements.forEach(resultElement => {
+        const text = resultElement.textContent;
+        const highlightedText = text.replace(new RegExp(searchText, 'gi'), `<span class="highlight">$&</span>`);
+        resultElement.innerHTML = highlightedText;
+      });
+
+      // Infinite scroll
+      let currentPage = 1;
+      const resultsPerPage = 10;
+      let isLoading = false;
+
+      function loadMoreResults() {
+        const rank = '<%= rank %>';
+        if (isLoading) return;
+
+        isLoading = true;
+
+        fetch(`/loadMoreResults?page=${currentPage + 1}&resultsPerPage=${resultsPerPage}`)
+          .then(response => response.json())
+          .then(data => {
+            isLoading = false;
+
+            if (data.length === 0) {
+              return;
+            }
+
+            const resultsContainer = document.getElementById('result');
+            let i = 0;
+            data.forEach(result => {
+              const index = currentPage * 10 + i++;
+              const resultItem = createResultItem(result, rank, index);
+              resultsContainer.appendChild(resultItem);
+            });
+
+            currentPage++;
+          })
+          .catch(error => {
+            console.error('Error fetching more results:', error);
+            isLoading = false;
+          });
+      }
+
+      function createResultItem(result, rank, index) {
+        const resultItem = document.createElement('div');
+        resultItem.classList.add('result-item');
+
+        let resultContent = '';
+
+        if (result.text !== null && result.text.substring(0, 4) !== 'http') {
+          resultContent += `<p>${result.text}</p>`;
+        }
+
+        if (result.text === null) {
+          resultContent += `<a href="${result.img}" target="_blank" rel="noopener noreferrer">Link to img</a><br>`;
+        }
+
+        if (result.text !== null && result.text.substring(0, 4) === 'http') {
+          resultContent += `<a href="${result.text}" target="_blank" rel="noopener noreferrer">Link to video</a><br>`;
+        }
+
+        resultItem.innerHTML = `
+          ${rank == 'true' ? `<h2>${index + 1}</h2>` : ''}
+          <div class="result-content">
+            <p>${result.date}</p>
+            <b>${result.author}</b>
+            <div>${resultContent}</div>
+            <p style="color: blue">Likes: ${result.likes}</p>
+          </div>
+          <a href="/incontext?messageId=${result.id}&?messageAfter=${result.messageAfter}">Context</a>
+        `;
+
+        return resultItem;
+      }
+      
+      window.addEventListener('scroll', () => {
+        const scrollHeight = document.documentElement.scrollHeight;
+        const scrollTop = document.documentElement.scrollTop;
+        const clientHeight = document.documentElement.clientHeight;
+
+        if (scrollTop + clientHeight >= scrollHeight - 100) {
+          loadMoreResults();
+        }
+      });
+    </script>
+  </body>
+</html>
