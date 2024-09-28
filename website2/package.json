@@ -3,16 +3,19 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "tailwind_build": "tailwindcss -i ./public/stylesheets/style.css -o ./public/stylesheets/main.css"
   },
   "dependencies": {
+    "@tailwindcss/forms": "^0.5.9",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "ejs": "^3.1.10",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
-    "morgan": "~1.9.1"
+    "morgan": "~1.9.1",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.13"
