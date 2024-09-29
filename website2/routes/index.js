@@ -9,7 +9,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 require('dotenv').config();
 
 // Now you can access the environment variable
-const apiKey = process.env.MONGO_URI;
+const apiKey =  "mongodb+srv://natewilliams:admin@dormie.0whqn7z.mongodb.net/?retryWrites=true&w=majority&appName=Dormie";
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
