@@ -17,8 +17,38 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
-app.get("/", (req, res) => {
-  res.render("signin");
+const client = new MongoClient(process.env.MONGO_URI, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+
+app.all("/login", async (req, res) => {
+  if (req.method === "GET") {
+    res.render("signin");
+  } else if (req.method === "POST") {
+    try {
+      await client.connect();
+
+      var database = await client.db("Dormie")
+      login_database = await database.collection("password")
+      const check = await login_database.findOne({ name: req.body.username });
+
+      if (check.password === req.body.password) {
+        res.render("home");
+      } else {
+        res.send("Wrong Password!");
+      }
+    } catch {
+      res.send("Wrong Details!");
+    }
+  }
+});
+
+app.get("/logout", (req, res) => {
+  res.redirect("/login");
 });
 
 app.get("/home", (req, res) => {
@@ -54,15 +84,6 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
 
   // Example: Validate and Save Data
 
-  
-  const client = new MongoClient(process.env.MONGO_URI, {
-    serverApi: {
-      version: ServerApiVersion.v1,
-      strict: true,
-      deprecationErrors: true,
-    }
-  });
-
   await client.connect();
 
   var database = await client.db("Dormie")
@@ -84,17 +105,19 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
   try {
       user_database = await database.collection("user_data2")
       login_database = await database.collection("password")
-      await user_database.insertOne(data); // Replace with your DB logic
+      await user_database.insertOne(data);
       await login_database.insertOne(login_data)
       res.render('signin'); // Redirect or render as needed
     } catch (error) {
       console.error(error);
       res.render('signup', { error: 'An error occurred during signup. Please try again.' });
     }
+
+    client.close();
 });
 
 app.get("/logout", (req, res) => {
-  res.redirect("/login");
+  res.redirect("/signin");
 });
 
 module.exports = app;
