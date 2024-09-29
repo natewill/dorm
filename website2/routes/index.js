@@ -5,12 +5,14 @@ const app = express.Router();
 const crypto = require('crypto')
 const session = require('express-session');
 const { MongoClient, ServerApiVersion } = require('mongodb');
+const { spawn } = require('child_process');
+const { Writable } = require('stream');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(session({
-  secret: crypto.randomBytes(32).toString('hex'),  // Session secret key
+  secret: process.env.SECRET_KEY,  // Session secret key
   resave: false,              // Don't save session if unmodified
   saveUninitialized: false   // Don't create session until something is stored 
 }));
@@ -66,7 +68,7 @@ app.all("/login", async (req, res) => {
       const check = await login_database.findOne({ username: username });
       if (check.password === password) {
         req.session.username = username;
-        res.redirect("home");
+        res.redirect("/home");
       } else {
         res.send("Wrong Password!");
       }
@@ -84,7 +86,7 @@ app.get("/search",  async (req, res) => {
   res.render('search')
 })
 
-app.all("/home", async (req, res) => {
+app.get("/home", async (req, res) => {
   if(!req.session.username){
     res.render("/login")
   }
@@ -102,46 +104,49 @@ app.all("/home", async (req, res) => {
   var database = await client.db("Dormie")
   var userdata = await database.collection("user_data3")
 
-  username = req.session.username;
-  const user_mongo = await userdata.findOne({username: username})
-  console.log(user_mongo)
-  const userEmbedding = user_mongo['data']
+  username = req.session.username;//username is the username of the person during this session
+  const userDataFromMongo = await userdata.findOne({username: username}) //get the userdata of this user
+  const userEmbedding = userDataFromMongo['data']//get the vector embedding of this user
 
-  const { spawn } = require('child_process');
+  const dataAsArray = JSON.stringify(userEmbedding);//turn that vector embedding into json so we can port it to our python script
+  const pythonProcess = await spawn('python3', ['/Users/tld/IDrive Downloads/STLD-C79NL067NH/Desktop/dorm/website2/top_k.py']);//port it to our python script
 
-  const dataAsArray = JSON.stringify(userEmbedding);
-  const pythonProcess = await spawn('python3', ['/Users/tld/IDrive Downloads/STLD-C79NL067NH/Desktop/dorm/website2/top_k.py', dataAsArray]);
+  
 
+  pythonProcess.stdin.write(dataAsArray);//write out json to the std input in python
+  pythonProcess.stdin.end() //close the std in
 
-  const indexes = await new Promise((resolve, reject) => {
-    let result = [];
-
+  var usersFromPython = await new Promise((resolve, reject) => {
+    let result = '';
+    let errorOutput = '';
     // Capture stdout data
-    pythonProcess.stdout.on('data', (data) => {
-        result = JSON.stringify(data.toString()).toArray();  // Collect the data from the Python process
+    pythonProcess.stdout.on('data', async (data) => {
+        result += await data.toString();  // Collect the data from the Python process
     });
 
     // Handle process exit and resolve the promise with the data
-    pythonProcess.on('close', (code) => {
-        if (code === 0) {
-            resolve(result);
-            console.log("Python script finished successfully.");
-        } else {
-            reject(new Error(`Python process exited with code ${code}`));
-        }
+    pythonProcess.stderr.on('data', (data) => {
+      errorOutput += data.toString();
+  });
 
-        pythonProcess.on('error', (err) => {
-          reject(err);
-      });
-    });
+  pythonProcess.on('close', (code) => {
+    if (code === 0) {
+        console.log("Python script finished successfully.");
+        resolve(result)
+    } else {
+        console.error(`Python process exited with code ${code}`);
+        console.error("Error Output:", errorOutput);  // Print any errors encountered in Python
+        reject(errorOutput)
+    }
   })
+});
 
-  console.log(result)
+  let validJsonString = usersFromPython.replace(/'/g, '"') //turn the ' into " so it's standard json
+  let names_ranked = JSON.parse(validJsonString) //ranked names from the python script
+  console.log(names_ranked)
 
-
-
-  
   res.render('home');
+
 }) 
 // GET signup page
 app.get('/signup', (req, res) => {
@@ -237,7 +242,7 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
       }
       await user_database.insertOne(data2);
       await login_database.insertOne(login_data)
-      res.redirect('signin'); // Redirect or render as needed
+      res.redirect('login'); // Redirect or render as needed
     } catch (error) {
       console.error(error);
       res.render('signup', { error: 'An error occurred during signup. Please try again.' });
