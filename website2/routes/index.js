@@ -1,6 +1,9 @@
 var express = require('express');
 var app = express.Router();
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 /* GET home page. */
 app.get("/", (req, res) => {
   res.render("signin");
@@ -10,8 +13,9 @@ app.get("/signup", (req, res) => {
 });
 
 app.post("/signup", async (req, res) => {
-  const { name, password } = req.body;
 
+  console.log(req.body)
+  /*
   if (password.length < 7) {
     return res.render("signup", {
       error: "Password must be at least 7 characters long.",
@@ -24,8 +28,8 @@ app.post("/signup", async (req, res) => {
   };
 
   await collection.insertMany([data]);
-
-  res.render("home");
+*/
+  res.render("signin");
 });
 
 app.all("/signin", async (req, res) => {
