@@ -17,34 +17,3 @@ people_json = json.dumps(data_array)
 embeddings = get_embedding(people_json)
 
 print(embeddings)
-
-"""
-query_embdedding = embeddings[1]
-from typing import List, Optional
-from scipy import spatial
-
-def distances_from_embeddings(
-    query_embedding: List[float],
-    embeddings: List[List[float]],
-    distance_metric="cosine",
-) -> List[List]:
-    distance_metrics = {
-        "cosine": spatial.distance.cosine,
-        "L1": spatial.distance.cityblock,
-        "L2": spatial.distance.euclidean,
-        "Linf": spatial.distance.chebyshev,
-    }
-    distances = [
-        distance_metrics[distance_metric](query_embedding, embedding)
-        for embedding in embeddings
-    ]
-    return distances
-distances = distances_from_embeddings(query_embdedding, embeddings, distance_metric="cosine")
-import numpy as np
-
-def indices_of_nearest_neighbors_from_distances(distances) -> np.ndarray:
-    Return a list of indices of nearest neighbors from a list of distances.
-    return np.argsort(distances)
-indices_of_nearest_neighbors = indices_of_nearest_neighbors_from_distances(distances)
-indices_of_nearest_neighbors
-"""

@@ -7,6 +7,7 @@ const session = require('express-session');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const { spawn } = require('child_process');
 const { Writable } = require('stream');
+const MMA = require('../src/MMA');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -94,6 +95,7 @@ app.get("/home", async (req, res) => {
     res.render("/login")
   }
 
+<<<<<<< HEAD
   const client = new MongoClient(apiKey, {
     serverApi: {
       version: ServerApiVersion.v1,
@@ -145,8 +147,13 @@ app.get("/home", async (req, res) => {
 });
 
   let validJsonString = usersFromPython.replace(/'/g, '"') //turn the ' into " so it's standard json
+=======
+  var usersFromPython = await MMA(req.session.username);
+  console.log(usersFromPython)
+  /*let validJsonString = usersFromPython.replace(/'/g, '"') //turn the ' into " so it's standard json
+>>>>>>> e86bbda15597e8b2dac51861b3822b1b31017113
   let names_ranked = JSON.parse(validJsonString) //ranked names from the python script
-  console.log(names_ranked)
+  console.log(names_ranked)*/
 
   res.render('home');
 
@@ -162,7 +169,7 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
 
   // Extract form data
   const {
-    username,
+    username_in_req,
     password,
     about,
     first_name,
@@ -183,10 +190,11 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
 
   await client.connect();
 
+
   var database = await client.db("Dormie")
   // Example: Insert Data into Database
-  const data = {
-    username_dict: username,
+  const data_dict = {
+    username: username_in_req,
     about: about,
     major: major,
     bedtime: bedtime,
@@ -198,10 +206,15 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
 
   // Arguments to pass to the Python script
 
-  let {username_dict, ...filteredDict} = data
+  let {username, ...filteredDict} = data_dict //all the data except the username
   // Spawn a new Python process and execute script.py
+<<<<<<< HEAD
   const dataAsArray = JSON.stringify(filteredDict);
   const pythonProcess = await spawn('python3', ['ranker.py', dataAsArray]);
+=======
+  const dataAsArray = JSON.stringify(filteredDict); //turn into json
+  const pythonProcess = await spawn('python3', ['/Users/tld/IDrive Downloads/STLD-C79NL067NH/Desktop/dorm/website2/ranker.py', dataAsArray]); //port into python
+>>>>>>> e86bbda15597e8b2dac51861b3822b1b31017113
 
 
   const data2 = await new Promise((resolve, reject) => {
@@ -215,7 +228,7 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
     // Handle process exit and resolve the promise with the data
     pythonProcess.on('close', (code) => {
         if (code === 0) {
-            resolve({ username: username, data: result });
+            resolve({ ...data_dict, vector: JSON.parse(result)});
             console.log("Python script finished successfully.");
         } else {
             reject(new Error(`Python process exited with code ${code}`));
@@ -230,13 +243,13 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
 
 
   const login_data = {
-    username,
+    username: username_in_req,
     password
   }
     
 
   try {
-      user_database = await database.collection("user_data3")
+      user_database = await database.collection("user_data4")
       login_database = await database.collection("password")
       if(!data2){
         console.log("doc is undefined!")
