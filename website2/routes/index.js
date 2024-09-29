@@ -2,11 +2,18 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const app = express.Router();
+const crypto = require('crypto')
+const session = require('express-session');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(session({
+  secret: crypto.randomBytes(32).toString('hex'),  // Session secret key
+  resave: false,              // Don't save session if unmodified
+  saveUninitialized: false   // Don't create session until something is stored 
+}));
 // Configure Multer Storage
 
 require('dotenv').config();
@@ -58,7 +65,8 @@ app.all("/login", async (req, res) => {
 
       const check = await login_database.findOne({ username: username });
       if (check.password === password) {
-        res.render("home");
+        req.session.username = username;
+        res.redirect("home");
       } else {
         res.send("Wrong Password!");
       }
@@ -72,8 +80,67 @@ app.get("/logout", (req, res) => {
   res.redirect("/login");
 });
 
-app.get("/home", (req, res) => {
-  c
+app.get("/search",  async (req, res) => {
+  res.render('search')
+})
+
+app.all("/home", async (req, res) => {
+  if(!req.session.username){
+    res.render("/login")
+  }
+
+  const client = new MongoClient(apiKey, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    }
+  });
+
+  
+  await client.connect();
+  var database = await client.db("Dormie")
+  var userdata = await database.collection("user_data3")
+
+  username = req.session.username;
+  const user_mongo = await userdata.findOne({username: username})
+  console.log(user_mongo)
+  const userEmbedding = user_mongo['data']
+
+  const { spawn } = require('child_process');
+
+  const dataAsArray = JSON.stringify(userEmbedding);
+  const pythonProcess = await spawn('python3', ['/Users/tld/IDrive Downloads/STLD-C79NL067NH/Desktop/dorm/website2/top_k.py', dataAsArray]);
+
+
+  const indexes = await new Promise((resolve, reject) => {
+    let result = [];
+
+    // Capture stdout data
+    pythonProcess.stdout.on('data', (data) => {
+        result = JSON.stringify(data.toString()).toArray();  // Collect the data from the Python process
+    });
+
+    // Handle process exit and resolve the promise with the data
+    pythonProcess.on('close', (code) => {
+        if (code === 0) {
+            resolve(result);
+            console.log("Python script finished successfully.");
+        } else {
+            reject(new Error(`Python process exited with code ${code}`));
+        }
+
+        pythonProcess.on('error', (err) => {
+          reject(err);
+      });
+    });
+  })
+
+  console.log(result)
+
+
+
+  
   res.render('home');
 }) 
 // GET signup page
@@ -170,7 +237,7 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
       }
       await user_database.insertOne(data2);
       await login_database.insertOne(login_data)
-      res.render('signin'); // Redirect or render as needed
+      res.redirect('signin'); // Redirect or render as needed
     } catch (error) {
       console.error(error);
       res.render('signup', { error: 'An error occurred during signup. Please try again.' });
