@@ -44,7 +44,13 @@ database = cluster['Dormie']
 collection = database['user_data4']
 
 #use this for search
-user_array = collection.find() #get every user's embedding (including the user we're using to query)
+query = {}
+if(user_data['search_array'] != []):
+    for item in user_data['search_array']:
+        query[item['search_term']] = { '$in': item['query'] }
+    user_array = collection.find(query)
+else:
+    user_array = collection.find() #get every user's embedding (including the user we're using to query)
 
 
 user = []

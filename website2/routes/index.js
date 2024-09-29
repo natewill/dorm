@@ -94,9 +94,6 @@ app.get("/home", async (req, res) => {
 
   var usersFromPython = await MMA(req.session.username);
   console.log(usersFromPython)
-  /*let validJsonString = usersFromPython.replace(/'/g, '"') //turn the ' into " so it's standard json
-  let names_ranked = JSON.parse(validJsonString) //ranked names from the python script
-  console.log(names_ranked)*/
 
   res.render('home');
 
