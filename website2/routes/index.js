@@ -11,14 +11,17 @@ const { Writable } = require('stream');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+require('dotenv').config();
+
 app.use(session({
-  secret: process.env.SECRET_KEY,  // Session secret key
+  secret: process.env.SECRETKEY,  // Session secret key
   resave: false,              // Don't save session if unmodified
   saveUninitialized: false   // Don't create session until something is stored 
 }));
-// Configure Multer Storage
 
-require('dotenv').config();
+console.log(`The secret key is: ${process.env.SECRETKEY}`);// Configure Multer Storage
+
+
 
 // Now you can access the environment variable
 const apiKey =  "mongodb+srv://natewilliams:admin@dormie.0whqn7z.mongodb.net/?retryWrites=true&w=majority&appName=Dormie";
@@ -109,7 +112,7 @@ app.get("/home", async (req, res) => {
   const userEmbedding = userDataFromMongo['data']//get the vector embedding of this user
 
   const dataAsArray = JSON.stringify(userEmbedding);//turn that vector embedding into json so we can port it to our python script
-  const pythonProcess = await spawn('python3', ['/Users/tld/IDrive Downloads/STLD-C79NL067NH/Desktop/dorm/website2/top_k.py']);//port it to our python script
+  const pythonProcess = await spawn('python3', ['top_k.py']);//port it to our python script
 
   
 
@@ -198,7 +201,7 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
   let {username_dict, ...filteredDict} = data
   // Spawn a new Python process and execute script.py
   const dataAsArray = JSON.stringify(filteredDict);
-  const pythonProcess = await spawn('python3', ['/Users/tld/IDrive Downloads/STLD-C79NL067NH/Desktop/dorm/website2/ranker.py', dataAsArray]);
+  const pythonProcess = await spawn('python3', ['ranker.py', dataAsArray]);
 
 
   const data2 = await new Promise((resolve, reject) => {
