@@ -14,6 +14,7 @@ theme: {
     'maroon': {
       DEFAULT: '#8b1f41',
       light: '#912c4c',
+      dark: '#60111a',
     },
 
     'back': {
