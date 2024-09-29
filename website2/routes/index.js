@@ -4,6 +4,9 @@ const path = require('path');
 const app = express.Router();
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // Configure Multer Storage
 
 require('dotenv').config();
@@ -36,13 +39,25 @@ app.all("/login", async (req, res) => {
     res.render("signin");
   } else if (req.method === "POST") {
     try {
-      await client.connect();
 
+
+      const client = new MongoClient(apiKey, {
+        serverApi: {
+          version: ServerApiVersion.v1,
+          strict: true,
+          deprecationErrors: true,
+        }
+      });
+
+      
+      await client.connect();
       var database = await client.db("Dormie")
       login_database = await database.collection("password")
-      const check = await login_database.findOne({ name: req.body.username });
+      var {username, password} = req.body
 
-      if (check.password === req.body.password) {
+
+      const check = await login_database.findOne({ username: username });
+      if (check.password === password) {
         res.render("home");
       } else {
         res.send("Wrong Password!");
@@ -95,6 +110,7 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
   var database = await client.db("Dormie")
   // Example: Insert Data into Database
   const data = {
+    username: username,
     about: about,
     major: major,
     bedtime: bedtime,
