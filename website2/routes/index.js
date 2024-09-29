@@ -16,7 +16,7 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-
+console.log(process.env.MONGO_URI)
 const client = new MongoClient(process.env.MONGO_URI, {
   serverApi: {
     version: ServerApiVersion.v1,
