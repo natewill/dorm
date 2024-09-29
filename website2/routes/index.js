@@ -206,4 +206,12 @@ app.get("/logout", (req, res) => {
   res.redirect("/signin");
 });
 
+app.get("/chat", (req, res) => {
+  res.render("chat")
+})
+
+app.get("/search", (req, res) => {
+  res.render("search")
+})
+
 module.exports = app;
