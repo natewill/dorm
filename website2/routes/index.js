@@ -19,6 +19,10 @@ const upload = multer({ storage: storage });
 app.get("/", (req, res) => {
   res.render("signin");
 });
+
+app.get("/home", (req, res) => {
+  res.render("home")
+}) 
 // GET signup page
 app.get('/signup', (req, res) => {
   res.render('signup'); // Ensure you have a 'signup' view
