@@ -854,14 +854,6 @@ select {
   margin-bottom: 1.5rem;
 }
 
-.mb-8 {
-  margin-bottom: 2rem;
-}
-
-.ml-24 {
-  margin-left: 6rem;
-}
-
 .ml-3 {
   margin-left: 0.75rem;
 }
@@ -1020,14 +1012,6 @@ select {
 
 .min-h-full {
   min-height: 100%;
-}
-
-.min-h-screen {
-  min-height: 100vh;
-}
-
-.w-10 {
-  width: 2.5rem;
 }
 
 .w-12 {
@@ -1408,69 +1392,9 @@ select {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-.bg-opacity-50 {
-  --tw-bg-opacity: 0.5;
-}
-
-.bg-gradient-to-r {
-  background-image: linear-gradient(to right, var(--tw-gradient-stops));
-}
-
-.from-maroon {
-  --tw-gradient-from: #8b1f41 var(--tw-gradient-from-position);
-  --tw-gradient-to: rgb(139 31 65 / 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-
-.to-maroon-dark {
-  --tw-gradient-to: #60111a var(--tw-gradient-to-position);
-}
-
-.bg-cover {
-  background-size: cover;
-}
-
-.bg-scroll {
-  background-attachment: scroll;
-}
-
-.fill-current {
-  fill: currentColor;
-}
-
-.object-contain {
-  -o-object-fit: contain;
-     object-fit: contain;
-}
-
 .object-fill {
   -o-object-fit: fill;
      object-fit: fill;
-}
-
-.object-none {
-  -o-object-fit: none;
-     object-fit: none;
-}
-
-.object-scale-down {
-  -o-object-fit: scale-down;
-     object-fit: scale-down;
-}
-
-.object-center {
-  -o-object-position: center;
-     object-position: center;
-}
-
-.object-left {
-  -o-object-position: left;
-     object-position: left;
-}
-
-.object-right {
-  -o-object-position: right;
-     object-position: right;
 }
 
 .p-0 {
@@ -1669,14 +1593,6 @@ select {
 
 .leading-9 {
   line-height: 2.25rem;
-}
-
-.leading-none {
-  line-height: 1;
-}
-
-.leading-normal {
-  line-height: 1.5;
 }
 
 .leading-tight {
@@ -1995,6 +1911,7 @@ body {
 }
 
 @media (min-width: 1024px) {
+<<<<<<< HEAD
   .lg\:flex {
     display: flex;
   }
@@ -2029,6 +1946,8 @@ body {
     border-color: rgb(156 163 175 / var(--tw-border-opacity));
   }
 
+=======
+>>>>>>> 6569ae47426c589567fb7c34ca6e78e5744c12a8
   .lg\:px-8 {
     padding-left: 2rem;
     padding-right: 2rem;
