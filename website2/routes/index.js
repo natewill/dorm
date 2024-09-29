@@ -2,6 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const app = express.Router();
+const { MongoClient, ServerApiVersion } = require('mongodb');
 
 // Configure Multer Storage
 const storage = multer.diskStorage({
@@ -21,7 +22,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/home", (req, res) => {
-  res.render("home")
+  res.render('home');
 }) 
 // GET signup page
 app.get('/signup', (req, res) => {
@@ -30,8 +31,7 @@ app.get('/signup', (req, res) => {
 
 // POST signup with file upload
 app.post('/signup', upload.single('file-upload'), async (req, res) => {
-  console.log('Form Data:', req.body); // Form fields
-  console.log('Uploaded File:', req.file); // Uploaded file info
+
 
   // Extract form data
   const {
@@ -52,33 +52,43 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
   const uploadedFile = req.file;
 
   // Example: Validate and Save Data
-  if (!uploadedFile) {
-    return res.render('signup', { error: 'Please upload a file.' });
-  }
 
+  
+  const client = new MongoClient(process.env.MONGO_URI, {
+    serverApi: {
+      version: ServerApiVersion.v1,
+      strict: true,
+      deprecationErrors: true,
+    }
+  });
+
+  await client.connect();
+
+  var database = await client.db("Dormie")
   // Example: Insert Data into Database
   const data = {
-    username,
-    about,
-    firstName,
-    lastName,
-    email,
-    gender,
-    major,
-    dorm,
-    bedtime,
-    clean,
-    atmosphere,
-    photo: uploadedFile.filename // Store the filename or path as needed
+    about: about,
+    major: major,
+    bedtime: bedtime,
+    clean: clean,
+    atmosphere: atmosphere
   };
 
-  try {
-    await collection.insertOne(data); // Replace with your DB logic
-    res.render('signin'); // Redirect or render as needed
-  } catch (error) {
-    console.error(error);
-    res.render('signup', { error: 'An error occurred during signup. Please try again.' });
+  /*const login_data = {
+    username
   }
+    */
+
+  try {
+      user_data = await database.collection("user_data2")
+      //login_data = await database.collection("password")
+      await user_data.insertOne(data); // Replace with your DB logic
+      //await login_data.insertOne()
+      res.render('signin'); // Redirect or render as needed
+    } catch (error) {
+      console.error(error);
+      res.render('signup', { error: 'An error occurred during signup. Please try again.' });
+    }
 });
 
 app.get("/logout", (req, res) => {
