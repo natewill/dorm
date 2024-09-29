@@ -12,14 +12,17 @@ const MMA = require('../src/MMA');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+require('dotenv').config();
+
 app.use(session({
-  secret: process.env.SECRET_KEY,  // Session secret key
+  secret: process.env.SECRETKEY,  // Session secret key
   resave: false,              // Don't save session if unmodified
   saveUninitialized: false   // Don't create session until something is stored 
 }));
-// Configure Multer Storage
 
-require('dotenv').config();
+console.log(`The secret key is: ${process.env.SECRETKEY}`);// Configure Multer Storage
+
+
 
 // Now you can access the environment variable
 const apiKey =  "mongodb+srv://natewilliams:admin@dormie.0whqn7z.mongodb.net/?retryWrites=true&w=majority&appName=Dormie";
