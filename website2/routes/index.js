@@ -73,6 +73,7 @@ app.get("/logout", (req, res) => {
 });
 
 app.get("/home", (req, res) => {
+  c
   res.render('home');
 }) 
 // GET signup page
@@ -110,13 +111,48 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
   var database = await client.db("Dormie")
   // Example: Insert Data into Database
   const data = {
-    username: username,
+    username_dict: username,
     about: about,
     major: major,
     bedtime: bedtime,
     clean: clean,
     atmosphere: atmosphere
   };
+
+  const { spawn } = require('child_process');
+
+  // Arguments to pass to the Python script
+
+  let {username_dict, ...filteredDict} = data
+  // Spawn a new Python process and execute script.py
+  const dataAsArray = JSON.stringify(filteredDict);
+  const pythonProcess = await spawn('python3', ['/Users/tld/IDrive Downloads/STLD-C79NL067NH/Desktop/dorm/website2/ranker.py', dataAsArray]);
+
+
+  const data2 = await new Promise((resolve, reject) => {
+    let result = '';
+
+    // Capture stdout data
+    pythonProcess.stdout.on('data', (data) => {
+        result += data.toString();  // Collect the data from the Python process
+    });
+
+    // Handle process exit and resolve the promise with the data
+    pythonProcess.on('close', (code) => {
+        if (code === 0) {
+            resolve({ username: username, data: result });
+            console.log("Python script finished successfully.");
+        } else {
+            reject(new Error(`Python process exited with code ${code}`));
+        }
+
+        pythonProcess.on('error', (err) => {
+          reject(err);
+      });
+    });
+  })
+
+
 
   const login_data = {
     username,
@@ -125,9 +161,14 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
     
 
   try {
-      user_database = await database.collection("user_data2")
+      user_database = await database.collection("user_data3")
       login_database = await database.collection("password")
-      await user_database.insertOne(data);
+      if(!data2){
+        console.log("doc is undefined!")
+      } else if(!login_data) {
+        console.log("doc is undefined bro!")
+      }
+      await user_database.insertOne(data2);
       await login_database.insertOne(login_data)
       res.render('signin'); // Redirect or render as needed
     } catch (error) {
