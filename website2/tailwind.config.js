@@ -18,7 +18,7 @@ theme: {
 
     'back': {
       DEFAULT: '#F3F4F8',
-      sign: '#fff2f2',
+      sign: '#FFF2F2',
     },
 
 
