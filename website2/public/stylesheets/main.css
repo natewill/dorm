@@ -891,6 +891,10 @@ select {
   height: 3rem;
 }
 
+.h-24 {
+  height: 6rem;
+}
+
 .h-4 {
   height: 1rem;
 }
