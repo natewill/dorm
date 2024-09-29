@@ -5,6 +5,12 @@ const app = express.Router();
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
 // Configure Multer Storage
+
+require('dotenv').config();
+
+// Now you can access the environment variable
+const apiKey = process.env.MONGO_URI;
+
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'uploads/'); // Ensure this directory exists
@@ -16,8 +22,8 @@ const storage = multer.diskStorage({
 });
 
 const upload = multer({ storage: storage });
-console.log(process.env.MONGO_URI)
-const client = new MongoClient(process.env.MONGO_URI, {
+
+const client = new MongoClient(apiKey, {
   serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
