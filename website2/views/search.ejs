@@ -1,42 +1,85 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
+<link href="/stylesheets/main.css" rel="stylesheet">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Page</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    
 </head>
-<body class="bg-gray-100 flex flex-col justify-start items-center min-h-screen pt-4">
 
+<body class="bg-back flex flex-col justify-start items-center min-h-screen">
+    <!--Navbar-->
+    <div class="h-24 w-full flex flex-row justify-between items-center mb-24 bg-gradient-to-r from-maroon to-maroon-dark shadow-2xl">
+        <img
+            src="https://cdn.discordapp.com/attachments/1280355262976360490/1289829540318679102/setting.png?ex=66fa3ede&is=66f8ed5e&hm=a0431fc8d07f50a621d14c1732b0d3ef68f5d1553408c150ffb660fd6fa814f7&"
+            class="object-contain object-left ml-8 flex h-12"
+        />
+        <img 
+            src="https://cdn.discordapp.com/attachments/1286925382632865804/1290021310797189271/Dormie_app_Gray.png?ex=66faf177&is=66f99ff7&hm=08162744a28d74d86402a2a69e227a5c38003eb9ad7a1f7f0834b4fb6b8c16aa&"
+            class="object-contain h-full"
+        />
+        <img
+            src="https://cdn.discordapp.com/attachments/1280355262976360490/1289826503818739762/communication.png?ex=66fa3c0a&is=66f8ea8a&hm=59f51764c7018fe1385d996ebb89a88666dd0810ffbe04016f40385015f1fe0e&"
+            class="object-contain object-right mr-8 h-12 flex"
+        />
+    </div>
+    
     <div class="bg-white p-8 rounded-lg shadow-lg text-center">
         <h1 class="text-2xl font-bold mb-6">Search Interests!</h1>
-        <input type="text" id="searchInput" placeholder="Search..." 
-               class="border border-gray-300 rounded-md px-4 py-2 w-80 mb-4 focus:outline-none focus:ring-2 focus:ring-red-500" />
-        <button onclick="performSearch()" 
-                class="bg-red-700 text-white px-6 py-2 rounded-md hover:bg-red-800 transition duration-300">
-            Search
+        <div class="flex justify-center space-x-2">
+            <input type="text" id="searchInput" placeholder="Search..."
+                class="border border-gray-300 rounded-md px-4 py-2 w-80 focus:outline-none focus:ring-2 focus:ring-red-500" />
+            <button onclick="performSearch()"
+                class="bg-maroon text-white px-6 py-2 rounded-md hover:bg-maroon-dark transition duration-300">Search</button>
+        </div>
+    </div>
+
+    <div class="flex mt-4">
+        <button onclick="openFilters()"
+            class="bg-maroon text-white px-4 py-2 rounded-md hover:bg-maroon-dark transition duration-300 mr-11 flex items-center justify-center h-12 w-18">
+            <img src="data:image/png;base64,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" alt="Filter" class="h-6 w-6" />
         </button>
+        <div id="searchResults" class="bg-white p-6 rounded-lg shadow-lg text-center w-96"></div>
     </div>
 
-    <div id="searchResults" class="mt-4 bg-white p-6 rounded-lg shadow-lg text-center w-96">
+    <div id="popup" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+        <div class="bg-white p-8 rounded-lg shadow-lg">
+            <h2 class="text-xl font-bold mb-4">Choose Filters</h2>
+            <button class="bg-gray-200 px-4 py-2 m-2 rounded-md" onclick="addFilter('Major,')">Major</button>
+            <button class="bg-gray-200 px-4 py-2 m-2 rounded-md" onclick="addFilter('Gamer,')">Gamer</button>
+            <button class="bg-gray-200 px-4 py-2 m-2 rounded-md" onclick="addFilter('OnCampus,')">OnCampus</button>
+            <button class="bg-maroon-700 text-white px-4 py-2 m-2 rounded-md" onclick="closePopup()">Close</button>
+        </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        function performSearch() {
+            const input = document.getElementById('searchInput').value;
+            const resultsDiv = document.getElementById('searchResults');
+
+            if (input) {
+                resultsDiv.innerHTML = `<p class="text-gray-700">Results for "<strong>${input}</strong>":</p>`;
+                resultsDiv.innerHTML += '<ul><li>Result 1</li><li>Result 2</li><li>Result 3</li></ul>';
+            } else {
+                resultsDiv.innerHTML = ''; //hello 
+            }
+        }
+
+        function openFilters() {
+            document.getElementById('popup').classList.remove('hidden');
+        }
+
+        function closePopup() {
+            document.getElementById('popup').classList.add('hidden');
+        }
+
+        function addFilter(filterText) {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.value += filterText + ' ';
+            closePopup();
+        }
+    </script>
 </body>
 
-<script>
-    function performSearch() {
-    const input = document.getElementById('searchInput').value;
-    const resultsDiv = document.getElementById('searchResults');
-
-    // Replace this later
-    if (input) {
-        resultsDiv.innerHTML = `<p class="text-gray-700">Results for "<strong>${input}</strong>":</p>`;
-        resultsDiv.innerHTML += '<ul><li>Result 1</li><li>Result 2</li><li>Result 3</li></ul>';
-    } else {
-        resultsDiv.innerHTML = '';
-    }
-}
-</script>
 </html>
