@@ -33,7 +33,7 @@
             <h2 class="text-xl font-bold mb-4">Choose Filters</h2>
             <button class="bg-gray-200 px-4 py-2 m-2 rounded-md" onclick="addFilter('Major,')">Major</button>
             <button class="bg-gray-200 px-4 py-2 m-2 rounded-md" onclick="addFilter('Gamer,')">Gamer</button>
-            <button class="bg-gray-200 px-4 py-2 m-2 rounded-md" onclick="addFilter('On Campus,')">On Campus</button>
+            <button class="bg-gray-200 px-4 py-2 m-2 rounded-md" onclick="addFilter('OnCampus,')">OnCampus</button>
             <button class="bg-maroon-700 text-white px-4 py-2 m-2 rounded-md" onclick="closePopup()">Close</button>
         </div>
     </div>
@@ -47,7 +47,7 @@
                 resultsDiv.innerHTML = `<p class="text-gray-700">Results for "<strong>${input}</strong>":</p>`;
                 resultsDiv.innerHTML += '<ul><li>Result 1</li><li>Result 2</li><li>Result 3</li></ul>';
             } else {
-                resultsDiv.innerHTML = '';
+                resultsDiv.innerHTML = ''; //hello 
             }
         }
 
