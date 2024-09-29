@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
-const router = express.Router();
+const app = express.Router();
 
 // Configure Multer Storage
 const storage = multer.diskStorage({
@@ -16,13 +16,16 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+app.get("/", (req, res) => {
+  res.render("signin");
+});
 // GET signup page
-router.get('/signup', (req, res) => {
+app.get('/signup', (req, res) => {
   res.render('signup'); // Ensure you have a 'signup' view
 });
 
 // POST signup with file upload
-router.post('/signup', upload.single('file-upload'), async (req, res) => {
+app.post('/signup', upload.single('file-upload'), async (req, res) => {
   console.log('Form Data:', req.body); // Form fields
   console.log('Uploaded File:', req.file); // Uploaded file info
 
@@ -74,4 +77,8 @@ router.post('/signup', upload.single('file-upload'), async (req, res) => {
   }
 });
 
-module.exports = router;
+app.get("/logout", (req, res) => {
+  res.redirect("/login");
+});
+
+module.exports = app;
