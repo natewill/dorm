@@ -16,6 +16,11 @@ theme: {
       light: '#912c4c',
     },
 
+    'back': {
+      DEFAULT: '#F3F4F8',
+      sign: '#fff2f2',
+    },
+
 
       background: 'hsl(var(--background))',
       foreground: 'hsl(var(--foreground))',

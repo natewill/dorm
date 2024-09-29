@@ -14,6 +14,7 @@
   }
 }
 
+
 body {
   color: var(--foreground);
   background: var(--background);
@@ -24,8 +25,4 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-}
-
-body{
-  background-color: #fff2f2;
 }
