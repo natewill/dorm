@@ -1,57 +1,77 @@
-var express = require('express');
-var app = express.Router();
+const express = require('express');
+const multer = require('multer');
+const path = require('path');
+const router = express.Router();
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-/* GET home page. */
-app.get("/", (req, res) => {
-  res.render("signin");
+// Configure Multer Storage
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); // Ensure this directory exists
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, uniqueSuffix + path.extname(file.originalname));
+  }
 });
-app.get("/signup", (req, res) => {
-  res.render("signup");
+
+const upload = multer({ storage: storage });
+
+// GET signup page
+router.get('/signup', (req, res) => {
+  res.render('signup'); // Ensure you have a 'signup' view
 });
 
-app.post("/signup", async (req, res) => {
+// POST signup with file upload
+router.post('/signup', upload.single('file-upload'), async (req, res) => {
+  console.log('Form Data:', req.body); // Form fields
+  console.log('Uploaded File:', req.file); // Uploaded file info
 
-  console.log(req.body)
-  /*
-  if (password.length < 7) {
-    return res.render("signup", {
-      error: "Password must be at least 7 characters long.",
-    });
+  // Extract form data
+  const {
+    username,
+    about,
+    first_name,
+    last_name,
+    email,
+    gender,
+    major,
+    dorm,
+    bedtime,
+    clean,
+    atmosphere
+  } = req.body;
+
+  // Access the uploaded file via req.file
+  const uploadedFile = req.file;
+
+  // Example: Validate and Save Data
+  if (!uploadedFile) {
+    return res.render('signup', { error: 'Please upload a file.' });
   }
 
+  // Example: Insert Data into Database
   const data = {
-    name,
-    password,
+    username,
+    about,
+    firstName,
+    lastName,
+    email,
+    gender,
+    major,
+    dorm,
+    bedtime,
+    clean,
+    atmosphere,
+    photo: uploadedFile.filename // Store the filename or path as needed
   };
 
-  await collection.insertMany([data]);
-*/
-  res.render("signin");
-});
-
-app.all("/signin", async (req, res) => {
-  if (req.method === "GET") {
-    res.render("signin");
-  } else if (req.method === "POST") {
-    try {
-      const check = await collection.findOne({ name: req.body.name });
-
-      if (check.password === req.body.password) {
-        res.render("signin");
-      } else {
-        res.send("Wrong Password!");
-      }
-    } catch {
-      res.send("Wrong Details!");
-    }
+  try {
+    await collection.insertOne(data); // Replace with your DB logic
+    res.render('signin'); // Redirect or render as needed
+  } catch (error) {
+    console.error(error);
+    res.render('signup', { error: 'An error occurred during signup. Please try again.' });
   }
 });
 
-app.get("/logout", (req, res) => {
-  res.redirect("/login");
-});
-
-module.exports = app;
+module.exports = router;

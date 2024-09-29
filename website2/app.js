@@ -8,6 +8,7 @@ var app = express();
 
 app.use('/', indexRouter);
 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
