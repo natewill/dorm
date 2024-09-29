@@ -36,6 +36,7 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
   // Extract form data
   const {
     username,
+    password,
     about,
     first_name,
     last_name,
@@ -74,16 +75,17 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
     atmosphere: atmosphere
   };
 
-  /*const login_data = {
-    username
+  const login_data = {
+    username,
+    password
   }
-    */
+    
 
   try {
-      user_data = await database.collection("user_data2")
-      //login_data = await database.collection("password")
-      await user_data.insertOne(data); // Replace with your DB logic
-      //await login_data.insertOne()
+      user_database = await database.collection("user_data2")
+      login_database = await database.collection("password")
+      await user_database.insertOne(data); // Replace with your DB logic
+      await login_database.insertOne(login_data)
       res.render('signin'); // Redirect or render as needed
     } catch (error) {
       console.error(error);
