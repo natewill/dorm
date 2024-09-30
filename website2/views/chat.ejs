@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+
+  <div class="flex flex-col h-screen">
+    <div class="bg-gray shadow-lg p-4 flex justify-between items-center">
+      <div class="text-lg font-bold">Messages</div>
+    </div>
+
+    <!-- Message section -->
+    <div class="flex flex-grow overflow-hidden">
+      <div class="w-1/4 bg-white border-r overflow-y-scroll" id="chatSidebar">
+        <!-- First person (Jane Reed) -->
+        <div id="janeReedChat" class="p-4 border-b flex items-center cursor-pointer user-chat hover:bg-gray-100" data-user-id="1" data-user-name="Jane Reed" data-user-avatar="https://st2.depositphotos.com/1054749/6808/i/450/depositphotos_68088587-stock-photo-portrait-of-a-young-african.jpg">
+          <img src="https://st2.depositphotos.com/1054749/6808/i/450/depositphotos_68088587-stock-photo-portrait-of-a-young-african.jpg" alt="Jane Reed" class="rounded-full w-10 h-10 mr-4">
+          <div>
+            <div class="font-semibold">Jane Reed</div>
+            <div class="text-sm text-gray-600">Hey, how's it going?</div>
+          </div>
+        </div>
+        <!-- Second person (Bob Pinecone) -->
+        <div id="bobPineconeChat" class="p-4 border-b flex items-center cursor-pointer user-chat hover:bg-gray-100" data-user-id="2" data-user-name="Bob Pinecone" data-user-avatar="https://images.pexels.com/photos/7562185/pexels-photo-7562185.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+          <img src="https://images.pexels.com/photos/7562185/pexels-photo-7562185.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Bob Pinecone" class="rounded-full w-10 h-10 mr-4">
+          <div>
+            <div class="font-semibold">Bob Pinecone</div>
+            <div class="text-sm text-gray-600">What's up?</div>
+          </div>
+        </div>
+
+    </div>
+
+      <!-- Chat Window -->
+      <div class="flex-1 flex flex-col">
+        <div id="chatHeader" class="bg-white shadow-md p-4 flex items-center">
+          <img id="chatHeaderImg" src="https://st2.depositphotos.com/1054749/6808/i/450/depositphotos_68088587-stock-photo-portrait-of-a-young-african.jpg" alt="Jane Reed" class="rounded-full w-10 h-10 mr-4">
+          <div>
+            <div id="chatHeaderName" class="font-semibold">Jane Reed</div>
+            <div id="chatHeaderStatus" class="text-sm text-gray-600">Online</div>
+          </div>
+        </div>
+
+        <!-- Chat messages -->
+        <div id="chatBox" class="flex-grow p-4 overflow-y-auto bg-gray-50">
+          <div id="janeReedMessages" class="chat-messages">
+            <div class="flex mb-4">
+              <img src="https://st2.depositphotos.com/1054749/6808/i/450/depositphotos_68088587-stock-photo-portrait-of-a-young-african.jpg" alt="Jane Reed" class="rounded-full w-8 h-8 mr-4">
+              <div class="bg-white p-3 rounded-lg shadow-sm">
+                <p>Hey, how are you?</p>
+              </div>
+            </div>
+            <div class="flex justify-end mb-4">
+              <div class="bg-red-500 text-white p-3 rounded-lg shadow-sm">
+                <p>I'm good! How about you?</p>
+              </div>
+            </div>
+          </div>
+
+          <div id="bobPineconeMessages" class="chat-messages hidden">
+            <div class="flex mb-4">
+              <img src="https://images.pexels.com/photos/7562185/pexels-photo-7562185.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Bob Pinecone" class="rounded-full w-8 h-8 mr-4">
+              <div class="bg-white p-3 rounded-lg shadow-sm">
+                <p>What's up?</p>
+              </div>
+            </div>
+            <div class="flex justify-end mb-4">
+              <div class="bg-red-500 text-white p-3 rounded-lg shadow-sm">
+                <p>Not much, you?</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Message input -->
+        <div class="bg-white p-4 border-t">
+          <div class="flex">
+            <input id="messageInput" type="text" class="flex-grow border border-gray-300 rounded-lg p-2 mr-4" placeholder="Type a message">
+            <button id="sendMessage" class="bg-red-500 text-white px-4 py-2 rounded-lg">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const chatBox = document.getElementById('chatBox');
+      const messageInput = document.getElementById('messageInput');
+      const sendMessageButton = document.getElementById('sendMessage');
+      
+      const janeReedMessages = document.getElementById('janeReedMessages');
+      const bobPineconeMessages = document.getElementById('bobPineconeMessages');
+      
+      const janeReedChat = document.getElementById('janeReedChat');
+      const bobPineconeChat = document.getElementById('bobPineconeChat');
+      
+      const chatHeaderName = document.getElementById('chatHeaderName');
+      const chatHeaderImg = document.getElementById('chatHeaderImg');
+      const chatHeaderStatus = document.getElementById('chatHeaderStatus');
+      
+      let currentChat = 'janeReed';
+      
+      // Function to switch chat
+      function switchChat(user) {
+        if (user === 'janeReed') {
+          chatHeaderName.textContent = 'Jane Reed';
+          chatHeaderImg.src = janeReedChat.dataset.userAvatar;
+          chatHeaderStatus.textContent = 'Online';
+          janeReedMessages.classList.remove('hidden');
+          bobPineconeMessages.classList.add('hidden');
+          currentChat = 'janeReed';
+        } else if (user === 'bobPinecone') {
+          chatHeaderName.textContent = 'Bob Pinecone';
+          chatHeaderImg.src = bobPineconeChat.dataset.userAvatar;
+          chatHeaderStatus.textContent = 'Offline';
+          bobPineconeMessages.classList.remove('hidden');
+          janeReedMessages.classList.add('hidden');
+          currentChat = 'bobPinecone';
+        }
+      }
+      
+      janeReedChat.addEventListener('click', () => switchChat('janeReed'));
+      bobPineconeChat.addEventListener('click', () => switchChat('bobPinecone'));
+      
+      // Sending messages
+      sendMessageButton.addEventListener('click', () => {
+        const message = messageInput.value.trim();
+        if (!message) return;
+        
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('flex', 'justify-end', 'mb-4');
+        messageElement.innerHTML = `
+          <div class="bg-red-500 text-white p-3 rounded-lg shadow-sm">
+            <p>${message}</p>
+          </div>
+        `;
+        
+        if (currentChat === 'janeReed') {
+          janeReedMessages.appendChild(messageElement);
+        } else if (currentChat === 'bobPinecone') {
+          bobPineconeMessages.appendChild(messageElement);
+        }
+        
+        messageInput.value = '';
+        chatBox.scrollTop = chatBox.scrollHeight;
+        
+        // Backend magic to send the message
+      });
+      
+      messageInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          sendMessageButton.click();
+        }
+      });
+      
+      switchChat(currentChat);
+      
+    });
+  </script>
+</body>
+</html>

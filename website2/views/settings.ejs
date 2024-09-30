@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Settings Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+  <div class="container mx-auto p-4">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">Settings</h1>
+
+    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+      <h2 class="text-2xl font-semibold mb-4">General Settings</h2>
+
+      <!-- Gender  Selection -->
+      <div class="mb-4">
+        <label for="Gender" class="text-gray-700 font-medium">Gender</label>
+        <select id="Gender" class="block w-full mt-2 p-2 border rounded-md" onchange="changeGender()">
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      
+      <!-- Age  Selection -->
+      <div class="mb-4">
+        <label for="Age" class="text-gray-700 font-medium">Age</label>
+        <select id="Age" class="block w-full mt-2 p-2 border rounded-md" onchange="changeAge()">
+          <option value="17">17</option>
+          <option value="18">18</option>
+          <option value="19">19</option>
+          <option value="20">20</option>
+          <option value="21">21</option>
+          <option value="22">22</option>
+          <option value="23">23</option>
+        </select>
+      </div>
+
+      <!-- Major  Selection -->
+      <div class="mb-4">
+        <label for="Major" class="text-gray-700 font-medium">Major</label>
+        <select id="Major" class="block w-full mt-2 p-2 border rounded-md" onchange="changeMajor()">
+          <option value="Engineering">Engineering</option>
+          <option value="Physics">Physics</option>
+          <option value="Art">Art</option>
+          <option value="Buisness">Buisness</option>
+          <option value="Math">Math</option>
+          <option value="Biology">Biology</option>
+          <option value="Chemistry">Chemistry</option>
+        </select>
+      </div>
+
+      <!-- Year  Selection -->
+      <div class="mb-4">
+        <label for="Year" class="text-gray-700 font-medium">Year</label>
+        <select id="Year" class="block w-full mt-2 p-2 border rounded-md" onchange="changeYear()">
+          <option value="2025">2025</option>
+          <option value="2026">2026</option>
+          <option value="2027">2027</option>
+          <option value="2028">2028</option>
+        </select>
+      </div>
+
+    <!-- Dorm  Selection -->
+      <div class="mb-4">
+        <label for="Dorm" class="text-gray-700 font-medium">Dorm</label>
+        <select id="Dorm" class="block w-full mt-2 p-2 border rounded-md" onchange="changeDorm()">
+            <option>Cochrane</option>
+            <option>West AJ</option>
+            <option>East AJ</option>
+            <option>Payne</option>
+            <option>Peddrew-Yates</option>
+            <option>East Campbell</option>
+            <option>Harper</option>
+            <option>New Residence Hall East</option>
+            <option>Johnson</option>
+            <option>New Hall West</option>
+            <option>Newman</option>
+            <option>Eggleston</option>
+            <option>Hillcrest</option>
+            <option>Pritchard</option>
+            <option>Miles</option>
+            <option>Barringer</option>
+            <option>Graduate Life Center</option>
+            <option>O'Shaughnessy</option>
+            <option>Vawter</option>
+            <option>Off Campus</option>
+        </select>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <label for="notifications" class="text-gray-700 font-medium">Enable Notifications</label>
+        <input type="checkbox" id="notifications" class="toggle-checkbox" onclick="toggleNotifications()">
+      </div>
+    </div>
+
+    <div class="bg-white rounded-lg shadow-md p-6">
+      <h2 class="text-2xl font-semibold mb-4">Account Settings</h2>
+
+      <div class="mb-4">
+        <label for="email" class="text-gray-700 font-medium">Email</label>
+        <input type="email" id="email" class="block w-full mt-2 p-2 border rounded-md" placeholder="Enter your email">
+      </div>
+
+      <div class="mb-4">
+        <label for="password" class="text-gray-700 font-medium">Password</label>
+        <input type="password" id="password" class="block w-full mt-2 p-2 border rounded-md" placeholder="Enter your password">
+      </div>
+
+      <button class="bg-maroon text-white px-4 py-2 rounded-md hover:bg-maroon-dark" onclick="saveSettings()">Save Changes</button>
+    </div>
+  </div>
+
+  <script>
+
+    function changeAge() {
+      const Age = document.getElementById('Age').value;
+    }
+    function changeGender() {
+      const Gender = document.getElementById('Gener').value;
+    }
+    function changeMajor() {
+      const Major = document.getElementById('Major').value;
+    }
+    function changeYear() {
+      const Year = document.getElementById('Year').value;
+    }
+    function changeDorm() {
+      const Dorm = document.getElementById('Dorm').value;
+    }
+
+]    function toggleNotifications() {
+      const isEnabled = document.getElementById('notifications').checked;
+    }
+
+\    function saveSettings() {
+      const username = document.getElementById('username').value;
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      // Backend magic
+      console.log('Settings saved:', { username, email, password });
+      alert('Settings saved successfully');
+    }
+  </script>
+
+</body>
+</html>
