@@ -379,7 +379,8 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
     dorm,
     bedtime,
     clean,
-    atmosphere
+    class_year,
+    atmosphere,
   } = req.body;
 
   // Access the uploaded file via req.file
@@ -404,7 +405,8 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
     gender: gender,
     dorm: dorm,
     email: email,
-    uploadedFile: uploadedFile ? uploadedFile.filename : null
+    uploadedFile: uploadedFile ? uploadedFile.filename : null,
+    class_year: class_year
   };
 
   const { spawn } = require('child_process');

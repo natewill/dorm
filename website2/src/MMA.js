@@ -62,7 +62,7 @@ async function MMA(username, search_array=[]) {
     })
     });
 
-    usersFromPython = usersFromPython.replace(/'/g, '"').replace()
+    //usersFromPython = usersFromPython.replace(/'/g, '"').replace()
     usersFromPython = JSON.parse(usersFromPython)
     const filteredArray = usersFromPython.map(({vector, ...rest }) => rest)
 
