@@ -240,28 +240,37 @@ app.post('/chats/:chatId/messages', async (req, res) => {
 
 app.post('/search', async (req, res) => {
   const username = req.session.username;
-  const { search } = req.body;
+  const { first_name, last_name, major, dorm } = req.body;
 
   if (!username) {
     return res.status(401).json({ error: 'User not logged in' });
   }
 
-  if (!search) {
-    return res.status(400).json({ error: 'Search query is required' });
-  }
-
   try {
-    // Parse the search terms into an array
-    const searchTerms = search.split(' ').map(term => term.trim()).filter(term => term !== '');
+    // Build the search_array
+    const search_array = [];
 
-    // Call MMA with the search terms
-    const results = await MMA(username, searchTerms);
+    if (first_name) {
+      search_array.push({ search_term: 'first_name', query: [first_name] });
+    }
+    if (last_name) {
+      search_array.push({ search_term: 'last_name', query: [last_name] });
+    }
+    if (major) {
+      search_array.push({ search_term: 'major', query: [major] });
+    }
+    if (dorm) {
+      search_array.push({ search_term: 'dorm', query: [dorm] });
+    }
+
+    // Call MMA with the search_array
+    const results = await MMA(username, search_array);
 
     // Return the search results to the client
     return res.status(200).json({ results });
   } catch (error) {
     console.error('Error searching:', error);
-    return res.status(500).json({ error: 'Internal server error' });
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
