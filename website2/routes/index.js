@@ -15,12 +15,12 @@ app.use(express.json());
 require('dotenv').config();
 
 app.use(session({
-  secret: process.env.SECRETKEY,  // Session secret key
+  secret: process.env.SECRET_KEY,  // Session secret key
   resave: false,              // Don't save session if unmodified
   saveUninitialized: false   // Don't create session until something is stored 
 }));
 
-console.log(`The secret key is: ${process.env.SECRETKEY}`);// Configure Multer Storage
+console.log(`The secret key is: ${process.env.SECRET_KEY}`);// Configure Multer Storage
 
 
 
@@ -152,7 +152,7 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
   let {username, ...filteredDict} = data_dict //all the data except the username
   // Spawn a new Python process and execute script.py
   const dataAsArray = JSON.stringify(filteredDict); //turn into json
-  const pythonProcess = await spawn('python3', ['/Users/tld/IDrive Downloads/STLD-C79NL067NH/Desktop/dorm/website2/ranker.py', dataAsArray]); //port into python
+  const pythonProcess = await spawn('python3', ['ranker.py', dataAsArray]); //port into python
 
 
   const data2 = await new Promise((resolve, reject) => {
