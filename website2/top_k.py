@@ -68,4 +68,4 @@ def indices_of_nearest_neighbors_from_distances(distances) -> np.ndarray:
 
 indices_of_nearest_neighbors = indices_of_nearest_neighbors_from_distances(distances) #get the indices of the nearest neighbors
 
-print([docs_array[x] for x in indices_of_nearest_neighbors], flush=True) #print the usernames ranked by closeness to the query username
+print(json.dumps([docs_array[x] for x in indices_of_nearest_neighbors]), flush=True)
