@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html class="text-center sm:text-left h-full bg-back">
     <link href="/stylesheets/main.css" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet2">
     <body class="h-full flex flex-col bg-back">
         <!--Navbar-->
-        <div class="h-24 w-full flex flex-row justify-between items-center mb-24 bg-gradient-to-r from-maroon to-maroon-dark shadow-2xl">
+        <div class="navbar h-24 w-full flex flex-row justify-between items-center mb-24 bg-gradient-to-r from-maroon to-maroon-dark shadow-gray-600 shadow-xl">
             <img
                 src="https://cdn.discordapp.com/attachments/1280355262976360490/1289829540318679102/setting.png?ex=66fa3ede&is=66f8ed5e&hm=a0431fc8d07f50a621d14c1732b0d3ef68f5d1553408c150ffb660fd6fa814f7&"
                 class="object-contain object-left ml-8 flex h-12"
@@ -19,43 +20,46 @@
         </div>
 
         <!--Content-->
-        <div class="flex flex-row justify-center">
+        <div class="flex flex-row justify-center space-y-24">
             <!--Card Container-->
-            <div class="mx-32 h-full flex flex-col justify-center bg-scroll shadow-lg">
+            <div class="mx-32 h-full flex flex-col bg-scroll space-y-12">
+              <!--space at the stop to prevent first card from get covered-->
+              <div class="bg-back mb-30 p-10">
+              </div>
                 <!--Card-->
-                <div class="max-w-sm w-full lg:max-w-full lg:flex shadow-md">
-                    <div className="lg:h-auto lg:w-48 flex-none bg-cover rounded-l-lg lg:rounded-l-lg border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white text-center overflow-hidden">
+                <% users.forEach(function(user) { %>
+                <div class="max-w-sm w-full lg:max-w-full lg:flex shadow-gray-600 shadow-lg">
+                    <div className="lg:h-auto lg:w-48 flex-none border-gray-400 lg:border-l lg:border-t lg:border-b lg:border-r lg:border-gray-400 bg-white text-center ">
                       <img
                           src="https://st2.depositphotos.com/1054749/6808/i/450/depositphotos_68088587-stock-photo-portrait-of-a-young-african.jpg"
-                          class="h-full object-none object-center shaowd-lg"
+                          class="h-full object-none object-center shaowd-lg rounded-l lg:rounded-l lg:rounded-t"
                       />
                     </div>
+
+                    <!---->
                     <div className="flex flex-row h-80 border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-r-lg p-4 justify-between leading-normal">
                       
-                      {/*Text within card*/}
+                        <!--Text within card-->
                       <div class="h-full pl-4 pr-24 flex flex-col justify-between leading-normal">
-                        {/*header and bio*/}
+                        <!--header and bio-->
                         <div class="h-full">
-                            <div class="text-gray-900 font-bold text-2xl mb-2">Can coffee make you a better developer?</div>
-                            <p class="text-gray-700 text-base h-full">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
+                            <div class="text-gray-900 font-bold text-2xl mb-2"><%= user.first_name %> <%= user.last_name %></div>
+                            <p class="text-gray-700 text-base h-full"><%= user.about %></p>
                         </div>
 
-                        {/*tags*/}
+                        <!--tags-->
                         <div class="flex flex-row justify-around mr-24">
                           <p>
-                            Major:
+                            Major: <%= user.major %>
                           </p>
                           <p>
-                            Dorm:
+                            Dorm: <%= user.dorm %>
                           </p>
                           <p>
-                            Gender:
+                            Gender: <%= user.gender %>
                           </p>
                           <p>
-                            Year:
-                          </p>
-                          <p>
-                            Age:
+                            Class: need to add this in /signup
                           </p>
                         </div>
 
@@ -69,6 +73,7 @@
                       </div>
                     </div>
                 </div>
+                <% }) %>
             </div>
         </div>
     </body>

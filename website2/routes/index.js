@@ -15,12 +15,10 @@ app.use(express.json());
 require('dotenv').config();
 
 app.use(session({
-  secret: process.env.SECRETKEY,  // Session secret key
+  secret: process.env.SECRET_KEY,  // Session secret key
   resave: false,              // Don't save session if unmodified
   saveUninitialized: false   // Don't create session until something is stored 
 }));
-
-console.log(`The secret key is: ${process.env.SECRETKEY}`);// Configure Multer Storage
 
 
 
@@ -82,6 +80,10 @@ app.all("/login", async (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.redirect("/home")
+});
+
 app.get("/logout", (req, res) => {
   res.redirect("/login");
 });
@@ -92,13 +94,12 @@ app.get("/search",  async (req, res) => {
 
 app.get("/home", async (req, res) => {
   if(!req.session.username){
-    res.render("/login")
+    res.redirect("/login")
   }
 
   var usersFromPython = await MMA(req.session.username);
-  console.log(usersFromPython)
 
-  res.render('home');
+  res.render('home', {users: usersFromPython});
 
 }) 
 // GET signup page
@@ -142,7 +143,12 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
     major: major,
     bedtime: bedtime,
     clean: clean,
-    atmosphere: atmosphere
+    atmosphere: atmosphere,
+    first_name: first_name,
+    last_name: last_name,
+    gender: gender,
+    dorm: dorm,
+    email: email
   };
 
   const { spawn } = require('child_process');
@@ -152,7 +158,7 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
   let {username, ...filteredDict} = data_dict //all the data except the username
   // Spawn a new Python process and execute script.py
   const dataAsArray = JSON.stringify(filteredDict); //turn into json
-  const pythonProcess = await spawn('python3', ['/Users/tld/IDrive Downloads/STLD-C79NL067NH/Desktop/dorm/website2/ranker.py', dataAsArray]); //port into python
+  const pythonProcess = await spawn('python3', ['ranker.py', dataAsArray]); //port into python
 
 
   const data2 = await new Promise((resolve, reject) => {
