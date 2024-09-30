@@ -53,11 +53,11 @@ else:
     user_array = collection.find() #get every user's embedding (including the user we're using to query)
 
 
-user = []
+docs_array = []
 embeddings = []
 for doc in user_array:
     embeddings.append(doc["vector"])
-    user.append(doc["username"])
+    docs_array.append({k: v for k, v in doc.items() if k != '_id'})
 
 distances = distances_from_embeddings(query_embedding, embeddings, distance_metric="cosine") #calculate the distances
 import numpy as np
@@ -67,4 +67,4 @@ def indices_of_nearest_neighbors_from_distances(distances) -> np.ndarray:
 
 indices_of_nearest_neighbors = indices_of_nearest_neighbors_from_distances(distances) #get the indices of the nearest neighbors
 
-print([user[x] for x in indices_of_nearest_neighbors], flush=True) #print the usernames ranked by closeness to the query username
+print([docs_array[x] for x in indices_of_nearest_neighbors], flush=True) #print the usernames ranked by closeness to the query username
