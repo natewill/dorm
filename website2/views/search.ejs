@@ -105,7 +105,7 @@
     
                 card.innerHTML = `
                   <div class="lg:h-auto lg:w-48 flex-none border-gray-400 lg:border-l lg:border-t lg:border-b lg:border-r lg:border-gray-400 bg-white text-center">
-                    <img src="${user.image || 'default_image_url'}" class="h-full object-cover object-center shadow-lg rounded-l lg:rounded-t" alt="${user.first_name} ${user.last_name}" />
+                    <img src="${user.uploadedFile || 'default_image_url'}" class="h-full object-cover object-center shadow-lg rounded-l lg:rounded-t" alt="${user.first_name} ${user.last_name}" />
                   </div>
                   <div class="flex flex-row h-80 border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-r-lg p-4 justify-between leading-normal w-full">
                     <div class="h-full pl-4 pr-24 flex flex-col justify-between leading-normal">

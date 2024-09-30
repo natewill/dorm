@@ -31,7 +31,6 @@ const sessionMiddleware = session({
   saveUninitialized: false,
   store: MongoStore.create({ 
     mongoUrl: process.env.MONGO_URI, // Use environment variable
-    // Additional options if needed
   }),
   cookie: { 
     secure: false, // Set to true if using HTTPS
@@ -52,7 +51,6 @@ io.use(sharedsession(sessionMiddleware, {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // View Engine Setup
 app.set('views', path.join(__dirname, 'views'));

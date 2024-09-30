@@ -42,7 +42,7 @@ const client = new MongoClient(apiKey, {
 // Now you can access the environment variable
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Ensure this directory exists
+    cb(null, 'public/uploads/'); // Ensure this directory exists
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -403,7 +403,8 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
     last_name: last_name,
     gender: gender,
     dorm: dorm,
-    email: email
+    email: email,
+    uploadedFile: uploadedFile ? uploadedFile.filename : null
   };
 
   const { spawn } = require('child_process');
