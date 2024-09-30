@@ -238,6 +238,33 @@ app.post('/chats/:chatId/messages', async (req, res) => {
   }
 });
 
+app.post('/search', async (req, res) => {
+  const username = req.session.username;
+  const { search } = req.body;
+
+  if (!username) {
+    return res.status(401).json({ error: 'User not logged in' });
+  }
+
+  if (!search) {
+    return res.status(400).json({ error: 'Search query is required' });
+  }
+
+  try {
+    // Parse the search terms into an array
+    const searchTerms = search.split(' ').map(term => term.trim()).filter(term => term !== '');
+
+    // Call MMA with the search terms
+    const results = await MMA(username, searchTerms);
+
+    // Return the search results to the client
+    return res.status(200).json({ results });
+  } catch (error) {
+    console.error('Error searching:', error);
+    return res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.post('/startChat', async (req, res) => {
   const username = req.session.username;      // User initiating the chat
   const { recipient } = req.body;             // Username of the recipient

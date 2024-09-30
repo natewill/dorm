@@ -40,7 +40,7 @@
         <div class="flex justify-center space-x-2">
             <input type="text" id="searchInput" placeholder="Search..."
                 class="border border-gray-300 rounded-md px-4 py-2 w-80 focus:outline-none focus:ring-2 focus:ring-maroon-light" />
-            <button onclick="performSearch()"
+            <button id ="searchButton"
                 class="bg-maroon text-white px-6 py-2 rounded-md hover:bg-maroon-dark transition duration-300">Search</button>
         </div>
     </div>
@@ -65,113 +65,44 @@
 
     <!-- JavaScript -->
     <script>
-        const users = [
-            {
-                first_name: "John",
-                last_name: "Doe",
-                about: "A passionate computer science student.",
-                major: "Computer Science",
-                dorm: "Maple Hall",
-                gender: "Male",
-                class: "Senior",
-                image: "https://st2.depositphotos.com/1054749/6808/i/450/depositphotos_68088587-stock-photo-portrait-of-a-young-african.jpg"
+        document.getElementById('searchButton').addEventListener('click', function() {
+          var searchInput = document.getElementById('searchInput').value;
+          fetch('/search', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
             },
-            {
-                first_name: "Jane",
-                last_name: "Smith",
-                about: "Enthusiastic gamer and avid reader.",
-                major: "Literature",
-                dorm: "Oak Hall",
-                gender: "Female",
-                class: "Junior",
-                image: "https://st2.depositphotos.com/1054749/6808/i/450/depositphotos_68088587-stock-photo-portrait-of-a-young-african.jpg"
-            },
-            {
-                first_name: "Alice",
-                last_name: "Johnson",
-                about: "Interested in on-campus activities and leadership.",
-                major: "Business Administration",
-                dorm: "Cochrane",
-                gender: "Female",
-                class: "Sophomore",
-                image: "https://st2.depositphotos.com/1054749/6808/i/450/depositphotos_68088587-stock-photo-portrait-of-a-young-african.jpg"
-            },
-        ];
-
-        function performSearch() {
-            const input = document.getElementById('searchInput').value.toLowerCase().trim();
-            const resultsDiv = document.getElementById('searchResults');
-            resultsDiv.innerHTML = '';
-
-            if (input) {
-                const filteredUsers = users.filter(user => {
-                    return (
-                        user.first_name.toLowerCase().includes(input) ||
-                        user.last_name.toLowerCase().includes(input) ||
-                        user.major.toLowerCase().includes(input) ||
-                        user.dorm.toLowerCase().includes(input) ||
-                        user.gender.toLowerCase().includes(input) ||
-                        user.class.toLowerCase().includes(input) ||
-                        user.about.toLowerCase().includes(input) 
-                    );
-                });
-
-                if (filteredUsers.length > 0) {
-                    filteredUsers.forEach(user => {
-                        // Create card element
-                        const card = document.createElement('div');
-                        card.className = "max-w-sm w-full lg:max-w-full lg:flex shadow-gray-600 shadow-lg m-4";
-
-                        card.innerHTML = `
-                            <div class="lg:h-auto lg:w-48 flex-none border-gray-400 lg:border-l lg:border-t lg:border-b lg:border-r lg:border-gray-400 bg-white text-center">
-                                <img src="${user.image}" class="h-full object-cover object-center shadow-lg rounded-l lg:rounded-t" alt="${user.first_name} ${user.last_name}" />
-                            </div>
-                            <div class="flex flex-row h-80 border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-r-lg p-4 justify-between leading-normal w-full">
-                                <div class="h-full pl-4 pr-24 flex flex-col justify-between leading-normal">
-                                    <div class="h-full">
-                                        <div class="text-gray-900 font-bold text-2xl mb-2">${user.first_name} ${user.last_name}</div>
-                                        <p class="text-gray-700 text-base h-full">${user.about}</p>
-                                    </div>
-                                    <div class="flex flex-row justify-around mr-24 mt-4">
-                                        <p class="text-sm text-gray-600">Major: ${user.major}</p>
-                                        <p class="text-sm text-gray-600">Dorm: ${user.dorm}</p>
-                                        <p class="text-sm text-gray-600">Gender: ${user.gender}</p>
-                                        <p class="text-sm text-gray-600">Class: ${user.class}</p>
-                                    </div>
-                                </div>
-                                <div class="flex items-center justify-center">
-                                    <img src="https://cdn.discordapp.com/attachments/1280355262976360490/1290027947482288191/Check_mark.png" class="object-contain h-24 mx-4 cursor-pointer" alt="Like" />
-                                </div>
-                            </div>
-                        `;
-
-                        resultsDiv.appendChild(card);
-                    });
-                } else {
-                    resultsDiv.innerHTML = `<p class="text-gray-700">No results found for "<strong>${input}</strong>".</p>`;
-                }
+            body: JSON.stringify({ search: searchInput })
+          })
+          .then(response => response.json())
+          .then(data => {
+            var searchResultsDiv = document.getElementById('searchResults');
+            searchResultsDiv.innerHTML = ''; // Clear previous results
+      
+            if (data.error) {
+              searchResultsDiv.innerHTML = '<p>Error: ' + data.error + '</p>';
+              return;
+            }
+      
+            if (data.results && data.results.length > 0) {
+              data.results.forEach(function(user) {
+                var userDiv = document.createElement('div');
+                userDiv.className = 'user-result bg-gray-100 p-4 m-2 rounded-md';
+                userDiv.innerHTML = '<p><strong>' + user.first_name + ' ' + user.last_name + '</strong></p>' +
+                                    '<p>Username: ' + user.username + '</p>' +
+                                    '<p>About: ' + user.about + '</p>';
+                searchResultsDiv.appendChild(userDiv);
+              });
             } else {
-                resultsDiv.innerHTML = `<p class="text-gray-700">Please enter a search term.</p>`;
+              searchResultsDiv.innerHTML = '<p>No results found</p>';
             }
-        }
-
-        function openFilters() {
-            document.getElementById('popup').classList.remove('hidden');
-        }
-
-        function closePopup() {
-            document.getElementById('popup').classList.add('hidden');
-        }
-
-        function addFilter(filterText) {
-            const searchInput = document.getElementById('searchInput');
-            if (!searchInput.value.toLowerCase().includes(filterText.toLowerCase())) {
-                searchInput.value += ` ${filterText}`;
-            }
-            closePopup();
-            performSearch();
-        }
-    </script>
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+        });
+      </script>
+      
 </body>
 
 </html>
