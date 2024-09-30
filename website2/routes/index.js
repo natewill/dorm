@@ -42,7 +42,7 @@ const client = new MongoClient(apiKey, {
 // Now you can access the environment variable
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, 'uploads/'); // Ensure this directory exists
+    cb(null, 'public/uploads/'); // Ensure this directory exists
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
@@ -238,6 +238,42 @@ app.post('/chats/:chatId/messages', async (req, res) => {
   }
 });
 
+app.post('/search', async (req, res) => {
+  const username = req.session.username;
+  const { first_name, last_name, major, dorm } = req.body;
+
+  if (!username) {
+    return res.status(401).json({ error: 'User not logged in' });
+  }
+
+  try {
+    // Build the search_array
+    const search_array = [];
+
+    if (first_name) {
+      search_array.push({ search_term: 'first_name', query: [first_name] });
+    }
+    if (last_name) {
+      search_array.push({ search_term: 'last_name', query: [last_name] });
+    }
+    if (major) {
+      search_array.push({ search_term: 'major', query: [major] });
+    }
+    if (dorm) {
+      search_array.push({ search_term: 'dorm', query: [dorm] });
+    }
+
+    // Call MMA with the search_array
+    const results = await MMA(username, search_array);
+
+    // Return the search results to the client
+    return res.status(200).json({ results });
+  } catch (error) {
+    console.error('Error searching:', error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
 app.post('/startChat', async (req, res) => {
   const username = req.session.username;      // User initiating the chat
   const { recipient } = req.body;             // Username of the recipient
@@ -343,7 +379,8 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
     dorm,
     bedtime,
     clean,
-    atmosphere
+    class_year,
+    atmosphere,
   } = req.body;
 
   // Access the uploaded file via req.file
@@ -367,7 +404,9 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
     last_name: last_name,
     gender: gender,
     dorm: dorm,
-    email: email
+    email: email,
+    uploadedFile: uploadedFile ? uploadedFile.filename : null,
+    class_year: class_year
   };
 
   const { spawn } = require('child_process');

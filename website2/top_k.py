@@ -43,14 +43,15 @@ cluster = MongoClient("mongodb+srv://Nate:admin@dormie.0whqn7z.mongodb.net/?retr
 database = cluster['Dormie']
 collection = database['user_data4']
 
+import re
 #use this for search
-query = {}
-if(user_data['search_array'] != []):
+if user_data.get('search_array'):
+    query = {}
     for item in user_data['search_array']:
-        query[item['search_term']] = { '$in': item['query'] }
+        query[item['search_term']] = { '$in': [re.compile(q, re.IGNORECASE) for q in item['query']]}
     user_array = collection.find(query)
 else:
-    user_array = collection.find() #get every user's embedding (including the user we're using to query)
+    user_array = collection.find()  # #get every user's embedding (including the user we're using to query)
 
 
 docs_array = []
@@ -67,4 +68,4 @@ def indices_of_nearest_neighbors_from_distances(distances) -> np.ndarray:
 
 indices_of_nearest_neighbors = indices_of_nearest_neighbors_from_distances(distances) #get the indices of the nearest neighbors
 
-print([docs_array[x] for x in indices_of_nearest_neighbors], flush=True) #print the usernames ranked by closeness to the query username
+print(json.dumps([docs_array[x] for x in indices_of_nearest_neighbors]), flush=True)
