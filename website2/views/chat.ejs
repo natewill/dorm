@@ -4,35 +4,50 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <title>Chat Application</title>
 </head>
 <body class="bg-gray-100">
 
   <div class="flex flex-col h-screen">
     <div class="bg-gray shadow-lg p-4 flex justify-between items-center">
       <div class="text-lg font-bold">Messages</div>
+      <!-- Dropdown Trigger and Menu -->
+      <div class="relative inline-block text-left">
+        <!-- Dropdown Button -->
+        <button id="userListToggle" type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none">
+          Start Chat
+          <!-- Dropdown Icon -->
+          <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+            <path fill-rule="evenodd" d="M5.293 7.707a1 1 0 011.414 0L10 11.414l3.293-3.707a1 1 0 011.414 0 .999.999 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a.999.999 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+      
+        <!-- Dropdown Menu -->
+        <div id="userList" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 hidden">
+          <div class="py-1">
+            <% users.forEach(function(user) { %>
+              <a href="#" class="user-item block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" data-username="<%= user.username %>">
+                <%= user.first_name %> <%= user.last_name %>
+              </a>
+            <% }); %>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Message section -->
     <div class="flex flex-grow overflow-hidden">
-      <div class="w-1/4 bg-white border-r overflow-y-scroll" id="chatSidebar">
-        <!-- First person (Jane Reed) -->
-        <div id="janeReedChat" class="p-4 border-b flex items-center cursor-pointer user-chat hover:bg-gray-100" data-user-id="1" data-user-name="Jane Reed" data-user-avatar="https://st2.depositphotos.com/1054749/6808/i/450/depositphotos_68088587-stock-photo-portrait-of-a-young-african.jpg">
-          <img src="https://st2.depositphotos.com/1054749/6808/i/450/depositphotos_68088587-stock-photo-portrait-of-a-young-african.jpg" alt="Jane Reed" class="rounded-full w-10 h-10 mr-4">
-          <div>
-            <div class="font-semibold">Jane Reed</div>
-            <div class="text-sm text-gray-600">Hey, how's it going?</div>
-          </div>
+        <div class="w-1/4 bg-white border-r overflow-y-scroll" id="chatSidebar">
+          <% contacts.forEach(function(contact) { %>
+            <div id="<%= contact.username %>Chat" class="p-4 border-b flex items-center cursor-pointer user-chat hover:bg-gray-100" data-chat-id="<%= contact.chatId %>" data-user-id="<%= contact.username %>" data-user-name="<%= contact.first_name %> <%= contact.last_name %>" data-user-avatar="<%= contact.avatar || 'images/defaultpfp.jpg' %>">
+              <img src="<%= contact.avatar || 'images/defaultpfp.jpg' %>" alt="<%= contact.first_name %> <%= contact.last_name %>" class="rounded-full w-10 h-10 mr-4">
+              <div>
+                <div class="font-semibold"><%= contact.first_name %> <%= contact.last_name %></div>
+                <div class="text-sm text-gray-600">Last message preview</div>
+              </div>
+            </div>
+          <% }); %>
         </div>
-        <!-- Second person (Bob Pinecone) -->
-        <div id="bobPineconeChat" class="p-4 border-b flex items-center cursor-pointer user-chat hover:bg-gray-100" data-user-id="2" data-user-name="Bob Pinecone" data-user-avatar="https://images.pexels.com/photos/7562185/pexels-photo-7562185.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
-          <img src="https://images.pexels.com/photos/7562185/pexels-photo-7562185.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Bob Pinecone" class="rounded-full w-10 h-10 mr-4">
-          <div>
-            <div class="font-semibold">Bob Pinecone</div>
-            <div class="text-sm text-gray-600">What's up?</div>
-          </div>
-        </div>
-
-    </div>
 
       <!-- Chat Window -->
       <div class="flex-1 flex flex-col">
@@ -46,33 +61,7 @@
 
         <!-- Chat messages -->
         <div id="chatBox" class="flex-grow p-4 overflow-y-auto bg-gray-50">
-          <div id="janeReedMessages" class="chat-messages">
-            <div class="flex mb-4">
-              <img src="https://st2.depositphotos.com/1054749/6808/i/450/depositphotos_68088587-stock-photo-portrait-of-a-young-african.jpg" alt="Jane Reed" class="rounded-full w-8 h-8 mr-4">
-              <div class="bg-white p-3 rounded-lg shadow-sm">
-                <p>Hey, how are you?</p>
-              </div>
-            </div>
-            <div class="flex justify-end mb-4">
-              <div class="bg-red-500 text-white p-3 rounded-lg shadow-sm">
-                <p>I'm good! How about you?</p>
-              </div>
-            </div>
-          </div>
-
-          <div id="bobPineconeMessages" class="chat-messages hidden">
-            <div class="flex mb-4">
-              <img src="https://images.pexels.com/photos/7562185/pexels-photo-7562185.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="Bob Pinecone" class="rounded-full w-8 h-8 mr-4">
-              <div class="bg-white p-3 rounded-lg shadow-sm">
-                <p>What's up?</p>
-              </div>
-            </div>
-            <div class="flex justify-end mb-4">
-              <div class="bg-red-500 text-white p-3 rounded-lg shadow-sm">
-                <p>Not much, you?</p>
-              </div>
-            </div>
-          </div>
+          <!-- Messages will be dynamically inserted here -->
         </div>
 
         <!-- Message input -->
@@ -86,79 +75,230 @@
     </div>
   </div>
 
+  <!-- Socket.IO Client Script -->
+  <script src="/socket.io/socket.io.js"></script>
   <script>
+    const username = '<%= username %>'; // Ensure this is set in your EJS template
     document.addEventListener('DOMContentLoaded', () => {
       const chatBox = document.getElementById('chatBox');
       const messageInput = document.getElementById('messageInput');
       const sendMessageButton = document.getElementById('sendMessage');
-      
-      const janeReedMessages = document.getElementById('janeReedMessages');
-      const bobPineconeMessages = document.getElementById('bobPineconeMessages');
-      
-      const janeReedChat = document.getElementById('janeReedChat');
-      const bobPineconeChat = document.getElementById('bobPineconeChat');
-      
+      const chatSidebar = document.getElementById('chatSidebar');
       const chatHeaderName = document.getElementById('chatHeaderName');
       const chatHeaderImg = document.getElementById('chatHeaderImg');
       const chatHeaderStatus = document.getElementById('chatHeaderStatus');
-      
-      let currentChat = 'janeReed';
-      
-      // Function to switch chat
-      function switchChat(user) {
-        if (user === 'janeReed') {
-          chatHeaderName.textContent = 'Jane Reed';
-          chatHeaderImg.src = janeReedChat.dataset.userAvatar;
-          chatHeaderStatus.textContent = 'Online';
-          janeReedMessages.classList.remove('hidden');
-          bobPineconeMessages.classList.add('hidden');
-          currentChat = 'janeReed';
-        } else if (user === 'bobPinecone') {
-          chatHeaderName.textContent = 'Bob Pinecone';
-          chatHeaderImg.src = bobPineconeChat.dataset.userAvatar;
-          chatHeaderStatus.textContent = 'Offline';
-          bobPineconeMessages.classList.remove('hidden');
-          janeReedMessages.classList.add('hidden');
-          currentChat = 'bobPinecone';
+      const userListToggle = document.getElementById('userListToggle');
+      const userList = document.getElementById('userList');
+
+      // Initialize Socket.IO
+      const socket = io(); // Connects to the same origin by default
+
+      let currentChatId = null;
+      let currentChatUsername = null;
+
+      // Toggle the visibility of the user list dropdown
+      userListToggle.addEventListener('click', function() {
+        userList.classList.toggle('hidden');
+      });
+
+      // Add event listeners to user items in the dropdown
+      document.querySelectorAll('.user-item').forEach(item => {
+        item.addEventListener('click', (event) => {
+          event.preventDefault();
+          const recipientUsername = item.dataset.username;
+          startChat(recipientUsername);
+          userList.classList.add('hidden');
+        });
+      });
+
+      // Add event listeners to existing chats in the sidebar
+      document.querySelectorAll('.user-chat').forEach(chat => {
+        chat.addEventListener('click', () => {
+          const chatId = chat.dataset.chatId;
+          const userName = chat.dataset.userName;
+          const userAvatar = chat.dataset.userAvatar;
+          switchChat(chatId, userName, userAvatar);
+        });
+      });
+
+      async function startChat(recipientUsername) {
+        try {
+          const response = await fetch('/startChat', { // Ensure this route returns { chatId }
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ recipient: recipientUsername }),
+          });
+
+          const data = await response.json();
+
+          if (response.ok) {
+            const chatId = data.chatId;
+            socket.emit('joinChat', { chatId });
+            addChatToSidebar(chatId, recipientUsername);
+            switchChat(chatId, recipientUsername, 'images/defaultpfp.jpg'); // Replace with actual avatar if available
+          } else {
+            console.error('Error starting chat:', data.error);
+          }
+        } catch (error) {
+          console.error('Network error:', error);
         }
       }
-      
-      janeReedChat.addEventListener('click', () => switchChat('janeReed'));
-      bobPineconeChat.addEventListener('click', () => switchChat('bobPinecone'));
-      
-      // Sending messages
-      sendMessageButton.addEventListener('click', () => {
-        const message = messageInput.value.trim();
-        if (!message) return;
-        
-        const messageElement = document.createElement('div');
-        messageElement.classList.add('flex', 'justify-end', 'mb-4');
-        messageElement.innerHTML = `
-          <div class="bg-red-500 text-white p-3 rounded-lg shadow-sm">
-            <p>${message}</p>
+
+      function addChatToSidebar(chatId, recipientUsername) {
+        // Check if chat already exists in the sidebar
+        if (document.getElementById(`${recipientUsername}Chat`)) {
+          return;
+        }
+
+        const chatElement = document.createElement('div');
+        chatElement.id = `${recipientUsername}Chat`;
+        chatElement.className = 'p-4 border-b flex items-center cursor-pointer user-chat hover:bg-gray-100';
+        chatElement.dataset.chatId = chatId;
+        chatElement.dataset.userId = recipientUsername;
+        chatElement.dataset.userName = recipientUsername;
+        chatElement.dataset.userAvatar = 'images/defaultpfp.jpg'; // Replace with actual avatar if available
+
+        chatElement.innerHTML = `
+          <img src="default-avatar-url.jpg" alt="${recipientUsername}" class="rounded-full w-10 h-10 mr-4">
+          <div>
+            <div class="font-semibold">${recipientUsername}</div>
+            <div class="text-sm text-gray-600">New chat</div>
           </div>
         `;
-        
-        if (currentChat === 'janeReed') {
-          janeReedMessages.appendChild(messageElement);
-        } else if (currentChat === 'bobPinecone') {
-          bobPineconeMessages.appendChild(messageElement);
+
+        chatElement.addEventListener('click', () => {
+          switchChat(chatId, recipientUsername, 'images/defaultpfp.jpg'); // Replace with actual avatar if available
+        });
+
+        chatSidebar.appendChild(chatElement);
+      }
+
+      async function switchChat(chatId, userName, userAvatar) {
+        if (currentChatId === chatId) {
+          // Already in this chat
+          return;
         }
-        
-        messageInput.value = '';
-        chatBox.scrollTop = chatBox.scrollHeight;
-        
-        // Backend magic to send the message
+
+        currentChatId = chatId;
+        currentChatUsername = userName;
+        chatHeaderName.textContent = userName;
+        chatHeaderImg.src = userAvatar;
+        chatHeaderStatus.textContent = 'Online';
+
+        socket.emit('joinChat', { chatId });
+
+        chatBox.innerHTML = '';
+
+        try {
+          // Fetch chat history from the server
+          const response = await fetch(`/chats/${chatId}/messages`);
+          if (!response.ok) {
+            throw new Error('Failed to fetch chat history');
+          }
+          const { messages } = await response.json();
+
+          // Display fetched messages
+          messages.forEach((msg) => {
+            appendMessage(msg);
+          });
+          chatBox.scrollTop = chatBox.scrollHeight;
+          console.log(`Loaded ${messages.length} messages for chat ${chatId}`);
+        } catch (error) {
+          console.error('Error loading chat history:', error);
+          chatBox.innerHTML = '<p class="text-red-500">Failed to load chat history. Please try again.</p>';
+        }
+      }
+
+      // Handle incoming messages
+      socket.on('receiveMessage', (msg) => {
+        if (msg.chatId.toString() === currentChatId.toString()) {
+          appendMessage(msg);
+        }
       });
-      
+
+      // Handle message sent confirmation
+      socket.on('messageSent', (msg) => {
+        if (msg.chatId.toString() === currentChatId.toString()) {
+          appendMessage(msg);
+        }
+      });
+
+      // Handle chat history received from server
+      socket.on('chatHistory', ({ chatId, messages }) => {
+        if (chatId.toString() === currentChatId.toString()) {
+          chatBox.innerHTML = '';
+          messages.forEach((msg) => {
+            appendMessage(msg);
+          });
+          chatBox.scrollTop = chatBox.scrollHeight;
+        }
+      });
+
+      // Handle errors
+      socket.on('error', (error) => {
+        console.error('Socket.IO Error:', error.message);
+        // Optionally, display error messages to the user
+      });
+
+      // Send message on button click
+      sendMessageButton.addEventListener('click', sendMessage);
+
+      // Send message on Enter key press
       messageInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
-          sendMessageButton.click();
+          sendMessage();
         }
       });
-      
-      switchChat(currentChat);
-      
+
+      function sendMessage() {
+        const message = messageInput.value.trim();
+        if (!message || !currentChatId) return;
+
+        const data = {
+          chatId: currentChatId,
+          message: message,
+        };
+
+        socket.emit('sendMessage', data);
+        messageInput.value = '';
+      }
+
+      function appendMessage(msg) {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('flex', 'mb-4');
+
+        if (msg.from === username) {
+          messageElement.classList.add('justify-end');
+          messageElement.innerHTML = `
+            <div class="bg-red-500 text-white p-3 rounded-lg shadow-sm max-w-xs">
+              <p>${msg.message}</p>
+            </div>
+          `;
+        } else {
+          messageElement.classList.add('justify-start');
+          messageElement.innerHTML = `
+            <img src="${chatHeaderImg.src == '' ? 'images/defaultpfp.jpg' : chatHeaderImg.src}" alt="${msg.from}" class="rounded-full w-8 h-8 mr-4">
+            <div class="bg-white p-3 rounded-lg shadow-sm max-w-xs">
+              <p>${msg.message}</p>
+            </div>
+          `;
+        }
+
+        chatBox.appendChild(messageElement);
+        chatBox.scrollTop = chatBox.scrollHeight;
+      }
+
+      // Initialize chat with first contact if available
+      const userChats = document.querySelectorAll('.user-chat');
+      if (userChats.length > 0) {
+        const firstUserChat = userChats[0];
+        const chatId = firstUserChat.dataset.chatId;
+        const userName = firstUserChat.dataset.userName;
+        const userAvatar = firstUserChat.dataset.userAvatar;
+        switchChat(chatId, userName, userAvatar);
+      }
     });
   </script>
 </body>
