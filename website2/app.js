@@ -30,7 +30,7 @@ const sessionMiddleware = session({
   resave: false,
   saveUninitialized: false,
   store: MongoStore.create({ 
-    mongoUrl: process.env.MONGO_URI, // Use environment variable
+    mongoUrl: "mongodb+srv://Nate:admin@dormie.0whqn7z.mongodb.net/?retryWrites=true&w=majority&appName=Dormie", // Use environment variable
   }),
   cookie: { 
     secure: false, // Set to true if using HTTPS
