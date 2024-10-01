@@ -3,7 +3,7 @@
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config();
 
-const apiKey = process.env.MONGO_URI;
+const apiKey = "mongodb+srv://Nate:admin@dormie.0whqn7z.mongodb.net/?retryWrites=true&w=majority&appName=Dormie";
 
 const client = new MongoClient(apiKey, {
   serverApi: {

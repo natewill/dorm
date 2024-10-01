@@ -84,6 +84,10 @@ app.all("/login", async (req, res) => {
   }
 });
 
+app.get("/test", async (req, res) => {
+  res.render('test')
+})
+
 app.get("/chats", async (req, res) => {
   const username = req.session.username;
   if (!username) {
@@ -363,8 +367,7 @@ app.get('/signup', (req, res) => {
 });
 
 // POST signup with file upload
-app.post('/signup', upload.single('file-upload'), async (req, res) => {
-
+app.post('/signup', upload.single('file-upload') , async (req, res) => {
 
   // Extract form data
   const {
@@ -409,6 +412,7 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
     class_year: class_year
   };
 
+
   const { spawn } = require('child_process');
 
   // Arguments to pass to the Python script
@@ -448,6 +452,8 @@ app.post('/signup', upload.single('file-upload'), async (req, res) => {
     username: username_in_req,
     password
   }
+
+  console.log(data2)
     
 
   try {
