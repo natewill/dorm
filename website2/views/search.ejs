@@ -148,7 +148,7 @@
             if (results && results.length > 0) {
               results.forEach(user => {
                 // Create card element
-                const imageUrl = user.uploadedFile ? `/uploads/${user.uploadedFile}` : '/images/defaultpfp.jpg';
+                const imageUrl = user.uploadedFile ? `/uploads/${user.uploadedFile}` : 'https://st2.depositphotos.com/1054749/6808/i/450/depositphotos_68088587-stock-photo-portrait-of-a-young-african.jpg';
                 const card = document.createElement('div');
                 card.className = "max-w-sm w-full lg:max-w-full lg:flex shadow-gray-600 shadow-lg m-4";
                 card.innerHTML = `
