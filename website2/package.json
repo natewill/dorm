@@ -10,6 +10,7 @@
     "@tailwindcss/forms": "^0.5.9",
     "connect-mongo": "^5.1.0",
     "cookie-parser": "~1.4.4",
+    "cropperjs": "^1.6.2",
     "debug": "~2.6.9",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
