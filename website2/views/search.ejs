@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>  
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -51,8 +51,51 @@
         <input type="text" id="lastNameInput" placeholder="Last Name" class="border border-gray-300 rounded-lg px-4 py-2 w-40 focus:outline-none focus:ring-2 focus:ring-maroon-light" />
       </div>
       <div class="flex flex-row space-x-2 mt-2 rounded-lg">
-        <input type="text" id="majorInput" placeholder="Major" class="border border-gray-300 rounded-lg px-4 py-2 w-40 focus:outline-none focus:ring-2 focus:ring-maroon-light" />
-        <input type="text" id="dormInput" placeholder="Dorm" class="border border-gray-300 rounded-lg px-4 py-2 w-40 focus:outline-none focus:ring-2 focus:ring-maroon-light" />
+        <select id="majorInput" class="border border-gray-300 rounded-lg px-4 py-2 w-40 focus:outline-none focus:ring-2 focus:ring-maroon-light">
+          <option value="">Select Major</option>
+          <option value="Computer Science">Computer Science</option>
+          <option value="Math">Math</option>
+          <option value="Physics">Physics</option>
+          <option value="Business">Business</option>
+          <option value="Chemistry">Chemistry</option>
+          <option value="Building Construction">Building Construction</option>
+          <option value="CMDA">CMDA</option>
+          <option value="English">English</option>
+          <option value="Philosophy">Philosophy</option>
+          <option value="Biology">Biology</option>
+          <option value="Entreprenuership">Entreprenuership</option>
+          <option value="Advertising">Advertising</option>
+          <option value="Agricultural Technology">Agricultural Technology</option>
+          <option value="Cognitive and Behavioral Neuroscience">Cognitive and Behavioral Neuroscience</option>
+          <option value="Biomedical Engineering">Biomedical Engineering</option>
+          <option value="Natural Resources Conservation">Natural Resources Conservation</option>
+          <option value="International Studies">International Studies</option>
+          <option value="Secure Computing">Secure Computing</option>
+          <option value="Wireless Communications and Signal Processing">Wireless Communications and Signal Processing</option>
+          <option value="Theatre Arts">Theatre Arts</option>
+          <!-- Add other majors as needed -->
+        </select>
+
+        <select id="dormInput" class="border border-gray-300 rounded-lg px-4 py-2 w-40 focus:outline-none focus:ring-2 focus:ring-maroon-light">
+          <option value="">Select Dorm</option>
+          <option value="Cochrane">Cochrane</option>
+          <option value="West AJ">West AJ</option>
+          <option value="East AJ">East AJ</option>
+          <option value="Pritchard">Pritchard</option>
+          <option value="Slusher">Slusher</option>
+          <option value="GLC at Donaldson Brown">GLC at Donaldson Brown</option>
+          <option value="O'Shaughnessy">O'Shaughnessy</option>
+          <option value="Payne">Payne</option>
+          <option value="Campbell">Campbell</option>
+          <option value="Hillcrest">Hillcrest</option>
+          <option value="Hoge">Hoge</option>
+          <option value="Peddrew-Yates">Peddrew-Yates</option>
+          <option value="CID">CID</option>
+          <option value="Miles">Miles</option>
+          <option value="Vawter">Vawter</option>
+          <option value="Off Campus">Off Campus</option>
+          <!-- Add other dorms as needed -->
+        </select>
       </div>
       <button onclick="performSearch()" class="bg-maroon text-white px-6 py-2 rounded-lg hover:bg-maroon-dark transition duration-300 mt-4">Search</button>
     </div>
@@ -60,7 +103,7 @@
 
     <!-- Search Results -->
     <div class="flex flex-col items-center mt-4 w-full rounded-lg max-w-4xl mx-4">
-        <div id="searchResults" class="bg-white p-6 rounded-lg shadow-lg w-full flex flex-col items-center">
+        <div id="searchResults" class="bg-gray-400 p-6 rounded-lg shadow-lg w-full flex flex-col items-center">
           <!-- Results will be appended here -->
         </div>
       </div>
@@ -73,7 +116,7 @@
           const lastName = document.getElementById('lastNameInput').value.trim();
           const major = document.getElementById('majorInput').value.trim();
           const dorm = document.getElementById('dormInput').value.trim();
-    
+          
           const searchCriteria = {
             first_name: firstName,
             last_name: lastName,
