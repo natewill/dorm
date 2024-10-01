@@ -152,14 +152,10 @@
                 const card = document.createElement('div');
                 card.className = "max-w-sm w-full lg:max-w-full lg:flex shadow-gray-600 shadow-lg m-4";
                 card.innerHTML = `
-                  <!--Card Container-->
-            <div class="mx-32 h-auto flex flex-col bg-scroll space-y-12">
-                <!--Card-->
-                <% users.forEach(function(user) { %>
                 <div class="max-w-sm h-60 w-full lg:max-w-full lg:flex shadow-gray-500 shadow-sm" style="border-radius: 15px 15px 15px 15px;">
                     <div class="lg:h-auto lg:w-48 flex-none border-gray-400 lg:border-l lg:border-t lg:border-b lg:border-r lg:border-gray-400 bg-white text-center " style="border-radius: 15px 15px 15px 15px;">
                       <img
-                          src="<%= user.uploadedFile ? '/uploads/' + user.uploadedFile : '/images/defaultpfp.jpg' %>"
+                          src="${imageUrl}"
                           class="h-full object-none object-center shaowd-lg rounded-l lg:rounded-l lg:rounded-t"
                           style="border-radius: 15px 0 0 15px;"
                       />
@@ -172,23 +168,23 @@
                       <div class="h-full pl-4 pr-24 flex flex-col justify-between leading-normal"> 
                         <!--header and bio-->
                         <div class="h-full">
-                            <div class="text-gray-900 font-bold text-2xl mb-2"><%= user.first_name %> <%= user.last_name %></div>
-                            <p class="text-gray-700 text-base h-full"><%= user.about %></p>
+                            <div class="text-gray-900 font-bold text-2xl mb-2">${user.first_name} ${user.last_name}</div>
+                            <p class="text-gray-700 text-base h-full">${user.about}</p>
                         </div>
 
                         <!--tags-->
                         <div class="flex flex-row justify-around space-x-8 mr-24">
                           <p>
-                            Major: <%= user.major %>
+                            Major: ${user.major}
                           </p>
                           <p>
-                            Dorm: <%= user.dorm %>
+                            Dorm: ${user.dorm}
+                          </p>
+                        <p>
+                            Gender: ${user.gender}
                           </p>
                           <p>
-                            Gender: <%= user.gender %>
-                          </p>
-                          <p>
-                            Class: <%= user.class_year %>
+                            Class: ${user.class_year}
                           </p>
                         </div>
 
