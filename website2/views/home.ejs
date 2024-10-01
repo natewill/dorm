@@ -2,9 +2,27 @@
 <html class="text-center sm:text-left h-full bg-back">
     <link href="/stylesheets/main.css" rel="stylesheet">
     <link href="/stylesheets/style.css" rel="stylesheet2">
+    <header class="relative">
+      <!--this space makes sure that the nav bar doesn't overlap with the elements-->
+      <div class="w-full h-30 mt-12">
+        <h1>Pinecones!!!</h1> <!--easter egg, no one should be able to see this bc the navbar should cover it-->
+      </div>
+      <!--title-->
+      <div class="flex flex-row justify-center h-96 w-full mb-12 overflow-hidden bg-cover object-contain">
+        <img
+          src="https://cdn.discordapp.com/attachments/1280355262976360490/1290509366637756507/istockphoto-1185438660-612x612.jpg?ex=66fcb801&is=66fb6681&hm=b7728186d5356df1903fd90ab33b60966585c1c8688c95ae979f6379e982ca30&"
+          class="static z-0 w-full backdrop-opacity-10"
+        />
+        <!--title text wrapper-->
+        <div class="absolute inset-0 flex items-center justify-center z-10 ">
+          <h1 class="text-7xl font-bold mb-6 shadow-gray-600 drod-shadow-xl">Recommended Dormies</h1>
+        </div>
+      </div>
+    </header>
+
     <body class="h-full flex flex-col bg-back">
       <!--Navbar Wrapper-->
-      <div class="relative bg-red z-1">
+      <div class="relative bg-red z-50">
         <!--Navbar-->
         <div class="navbar fixed h-24 w-full top-0 flex flex-row justify-between items-center mb-12 bg-gradient-to-r from-maroon to-maroon-dark shadow-gray-600 shadow-xl">
           <!--settings icon--> 
@@ -45,32 +63,21 @@
         <!--Content-->
         <div class="flex flex-row justify-center space-y-24">
           <div class="flex flex-col">
-            <!--this space makes sure that the nav bar doesn't overlap with the elements-->
-            <div class="w-full h-30 mt-12">
-              <h1>Pinecones!!!</h1> <!--easter egg, no one should be able to see this bc the navbar should cover it-->
-            </div>
-            <!--title-->
-            <div class="flex flex-row justify-center h-96 w-full mb-12 overflow-hidden bg-cover object-contain">
-              <img
-                src="https://cdn.discordapp.com/attachments/1280355262976360490/1290509366637756507/istockphoto-1185438660-612x612.jpg?ex=66fcb801&is=66fb6681&hm=b7728186d5356df1903fd90ab33b60966585c1c8688c95ae979f6379e982ca30&"
-                class="static w-full"
-                />
-              <h1 class="absolute -z-1 text-7xl font-bold mb-6">Recommended Dormies</h1>
-            </div>
             <!--Card Container-->
-            <div class="mx-32 h-full flex flex-col bg-scroll space-y-12">
+            <div class="mx-32 h-auto flex flex-col bg-scroll space-y-12">
                 <!--Card-->
                 <% users.forEach(function(user) { %>
-                <div class="max-w-sm w-full lg:max-w-full lg:flex shadow-gray-600 shadow-lg">
-                    <div class="lg:h-auto lg:w-48 flex-none border-gray-400 lg:border-l lg:border-t lg:border-b lg:border-r lg:border-gray-400 bg-white text-center ">
+                <div class="max-w-sm h-60 w-full lg:max-w-full lg:flex shadow-gray-500 shadow-sm" style="border-radius: 15px 15px 15px 15px;">
+                    <div class="lg:h-auto lg:w-48 flex-none border-gray-400 lg:border-l lg:border-t lg:border-b lg:border-r lg:border-gray-400 bg-white text-center " style="border-radius: 15px 15px 15px 15px;">
                       <img
                           src="<%= user.uploadedFile ? '/uploads/' + user.uploadedFile : 'https://st2.depositphotos.com/1054749/6808/i/450/depositphotos_68088587-stock-photo-portrait-of-a-young-african.jpg' %>"
                           class="h-full object-none object-center shaowd-lg rounded-l lg:rounded-l lg:rounded-t"
+                          style="border-radius: 15px 0 0 15px;"
                       />
                     </div>
 
-                    <!---->
-                    <div class="flex flex-row w-full h-80 border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-r-lg p-4 justify-between leading-normal">
+                    <!--Card Content-->
+                    <div class="flex flex-row w-full h-auto border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-r-lg p-4 justify-between leading-normal" style="border-radius: 0 15px 15px 0;">
                       
                         <!--Text within card-->
                       <div class="h-full pl-4 pr-24 flex flex-col justify-between leading-normal">
@@ -81,7 +88,7 @@
                         </div>
 
                         <!--tags-->
-                        <div class="flex flex-row justify-around mr-24">
+                        <div class="flex flex-row justify-around space-x-8 mr-24">
                           <p>
                             Major: <%= user.major %>
                           </p>
@@ -101,7 +108,8 @@
                       <div class="flex items-center justify-center">
                         <img
                           src="https://cdn.discordapp.com/attachments/1280355262976360490/1290027947482288191/Check_mark.png?ex=66faf7a6&is=66f9a626&hm=d7d8ee8476aa37a3ceb9623064375c4dab6cb5106977930bb76e49e024a7e419&"
-                          class="object-contain h-24 mx-24"
+                          class="object-contain h-12 mx-24"
+                          style="height: 80px;"
                         />
                       </div>
                     </div>
