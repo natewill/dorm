@@ -147,30 +147,62 @@
             
             if (results && results.length > 0) {
               results.forEach(user => {
-                // Create card element
+                // Create card element who
                 const imageUrl = user.uploadedFile ? `/uploads/${user.uploadedFile}` : '/images/defaultpfp.jpg';
                 const card = document.createElement('div');
                 card.className = "max-w-sm w-full lg:max-w-full lg:flex shadow-gray-600 shadow-lg m-4";
                 card.innerHTML = `
-                  <div class="lg:h-auto lg:w-48 flex-none border-gray-400 lg:border-l lg:border-t lg:border-b lg:border-r lg:border-gray-400 bg-white text-center">
-                    <img src="${imageUrl}" class="h-full object-cover object-center shadow-lg rounded-l lg:rounded-t" alt="${user.first_name} ${user.last_name}" />
-                  </div>
-                  <div class="flex flex-row h-80 border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-r-lg p-4 justify-between leading-normal w-full">
-                    <div class="h-full pl-4 pr-24 flex flex-col justify-between leading-normal">
-                      <div class="h-full">
-                        <div class="text-gray-900 font-bold text-2xl mb-2">${user.first_name} ${user.last_name}</div>
-                        <p class="text-gray-700 text-base h-full">${user.about}</p>
+                  <!--Card Container-->
+            <div class="mx-32 h-auto flex flex-col bg-scroll space-y-12">
+                <!--Card-->
+                <% users.forEach(function(user) { %>
+                <div class="max-w-sm h-60 w-full lg:max-w-full lg:flex shadow-gray-500 shadow-sm" style="border-radius: 15px 15px 15px 15px;">
+                    <div class="lg:h-auto lg:w-48 flex-none border-gray-400 lg:border-l lg:border-t lg:border-b lg:border-r lg:border-gray-400 bg-white text-center " style="border-radius: 15px 15px 15px 15px;">
+                      <img
+                          src="<%= user.uploadedFile ? '/uploads/' + user.uploadedFile : '/images/defaultpfp.jpg' %>"
+                          class="h-full object-none object-center shaowd-lg rounded-l lg:rounded-l lg:rounded-t"
+                          style="border-radius: 15px 0 0 15px;"
+                      />
+                    </div>
+
+                    <!--Card Content-->
+                    <div class="flex flex-row w-full h-auto border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-r-lg p-4 justify-between leading-normal" style="border-radius: 0 15px 15px 0;">
+                      
+                        <!--Text within card-->
+                      <div class="h-full pl-4 pr-24 flex flex-col justify-between leading-normal"> 
+                        <!--header and bio-->
+                        <div class="h-full">
+                            <div class="text-gray-900 font-bold text-2xl mb-2"><%= user.first_name %> <%= user.last_name %></div>
+                            <p class="text-gray-700 text-base h-full"><%= user.about %></p>
+                        </div>
+
+                        <!--tags-->
+                        <div class="flex flex-row justify-around space-x-8 mr-24">
+                          <p>
+                            Major: <%= user.major %>
+                          </p>
+                          <p>
+                            Dorm: <%= user.dorm %>
+                          </p>
+                          <p>
+                            Gender: <%= user.gender %>
+                          </p>
+                          <p>
+                            Class: <%= user.class_year %>
+                          </p>
+                        </div>
+
                       </div>
-                      <div class="flex flex-row justify-around mr-24 mt-4">
-                        <p class="text-sm text-gray-600">Major: ${user.major}</p>
-                        <p class="text-sm text-gray-600">Dorm: ${user.dorm}</p>
-                        <p class="text-sm text-gray-600">Gender: ${user.gender}</p>
+                      <!--like button-->
+                      <div class="flex items-center justify-center">
+                        <img
+                          src="https://cdn.discordapp.com/attachments/1280355262976360490/1290027947482288191/Check_mark.png?ex=66faf7a6&is=66f9a626&hm=d7d8ee8476aa37a3ceb9623064375c4dab6cb5106977930bb76e49e024a7e419&"
+                          class="object-contain h-12 mx-24"
+                          style="height: 80px;"
+                        />
                       </div>
                     </div>
-                    <div class="flex items-center justify-center">
-                      <img src="https://cdn.discordapp.com/attachments/1280355262976360490/1290027947482288191/Check_mark.png?ex=66faf7a6&is=66f9a626&hm=d7d8ee8476aa37a3ceb9623064375c4dab6cb5106977930bb76e49e024a7e419&" class="object-contain h-24 mx-4 cursor-pointer" alt="Like" />
-                    </div>
-                  </div>
+                </div>
                 `;
     
                 resultsDiv.appendChild(card);
