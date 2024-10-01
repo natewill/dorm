@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Page</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="/stylesheets/main.css" rel="stylesheet">
+    <link href="/stylesheets/style.css" rel="stylesheet2">
 </head>
 
 <body class="bg-back flex flex-col justify-start items-center min-h-screen">
@@ -44,36 +45,26 @@
 
     <div class="bg-white p-6 rounded-lg shadow-lg text-center w-full max-w-4xl mx-4">
     <h1 class="text-2xl font-bold mb-6">Search Interests!</h1>
-    <div class="flex flex-col items-center">
-      <div class="flex flex-row space-x-2">
-        <input type="text" id="firstNameInput" placeholder="First Name" class="border border-gray-300 rounded-md px-4 py-2 w-40 focus:outline-none focus:ring-2 focus:ring-maroon-light" />
-        <input type="text" id="lastNameInput" placeholder="Last Name" class="border border-gray-300 rounded-md px-4 py-2 w-40 focus:outline-none focus:ring-2 focus:ring-maroon-light" />
+    <div class="flex flex-col rounded-lg items-center">
+      <div class="flex flex-row space-x-2 rounded-lg">
+        <input type="text" id="firstNameInput" placeholder="First Name" class="border border-gray-300 rounded-lg px-4 py-2 w-40 focus:outline-none focus:ring-2 focus:ring-maroon-light" />
+        <input type="text" id="lastNameInput" placeholder="Last Name" class="border border-gray-300 rounded-lg px-4 py-2 w-40 focus:outline-none focus:ring-2 focus:ring-maroon-light" />
       </div>
-      <div class="flex flex-row space-x-2 mt-2">
-        <input type="text" id="majorInput" placeholder="Major" class="border border-gray-300 rounded-md px-4 py-2 w-40 focus:outline-none focus:ring-2 focus:ring-maroon-light" />
-        <input type="text" id="dormInput" placeholder="Dorm" class="border border-gray-300 rounded-md px-4 py-2 w-40 focus:outline-none focus:ring-2 focus:ring-maroon-light" />
+      <div class="flex flex-row space-x-2 mt-2 rounded-lg">
+        <input type="text" id="majorInput" placeholder="Major" class="border border-gray-300 rounded-lg px-4 py-2 w-40 focus:outline-none focus:ring-2 focus:ring-maroon-light" />
+        <input type="text" id="dormInput" placeholder="Dorm" class="border border-gray-300 rounded-lg px-4 py-2 w-40 focus:outline-none focus:ring-2 focus:ring-maroon-light" />
       </div>
-      <button onclick="performSearch()" class="bg-maroon text-white px-6 py-2 rounded-md hover:bg-maroon-dark transition duration-300 mt-4">Search</button>
+      <button onclick="performSearch()" class="bg-maroon text-white px-6 py-2 rounded-lg hover:bg-maroon-dark transition duration-300 mt-4">Search</button>
     </div>
   </div>
 
     <!-- Search Results -->
-    <div class="flex flex-col items-center mt-4 w-full max-w-4xl mx-4">
+    <div class="flex flex-col items-center mt-4 w-full rounded-lg max-w-4xl mx-4">
         <div id="searchResults" class="bg-white p-6 rounded-lg shadow-lg w-full flex flex-col items-center">
           <!-- Results will be appended here -->
         </div>
       </div>
 
-    <!-- Filter Popup -->
-    <div id="popup" class="hidden fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-        <div class="bg-white p-8 rounded-lg shadow-lg">
-            <h2 class="text-xl font-bold mb-4">Choose Filters</h2>
-            <button class="bg-gray-200 px-4 py-2 m-2 rounded-md hover:bg-gray-300" onclick="addFilter('Male')">Male</button>
-            <button class="bg-gray-200 px-4 py-2 m-2 rounded-md hover:bg-gray-300" onclick="addFilter('Female')">Female</button>
-            <button class="bg-gray-200 px-4 py-2 m-2 rounded-md hover:bg-gray-300" onclick="addFilter('Sophomore')">Sophomore</button>
-            <button class="bg-maroon-700 text-white px-4 py-2 m-2 rounded-md hover:bg-maroon-dark" onclick="closePopup()">Close</button>
-        </div>
-    </div>
 
     <!-- JavaScript -->
     <script>
