@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="/stylesheets/main.css" rel="stylesheet">
   <link href="/stylesheets/style.css" rel="stylesheet2">
-  <body class="h-full flex flex-col bg-back">
+  <body class="h-80 flex flex-col bg-back">
       <!--Navbar-->
-      <div class="navbar h-24 w-full flex flex-row justify-between items-center mt-0 bg-gradient-to-r from-maroon to-maroon-dark shadow-gray-600 shadow-xl">
+      <div class="navbar h-24 w-full flex flex-row justify-between items-center mt-0 bg-gradient-to-r from-maroon to-maroon-dark shadow-gray-600 shadow-lg">
         <!--settings icon--> 
         <a href="/settings">
         <img
@@ -46,7 +46,7 @@
 
     <!-- Message section -->
     <div class="flex flex-grow overflow-hidden">
-        <div class="w-1/4 bg-white border-r overflow-y-scroll" id="chatSidebar">
+        <div class="h-96 w-1/4 bg-white border-r overflow-y-scroll" id="chatSidebar">
           <% contacts.forEach(function(contact) { %>
             <div id="<%= contact.username %>Chat" class="p-4 border-b flex items-center cursor-pointer user-chat hover:bg-gray-100" data-chat-id="<%= contact.chatId %>" data-user-id="<%= contact.username %>" data-user-name="<%= contact.first_name %> <%= contact.last_name %>" data-user-avatar="<%= contact.avatar || 'images/defaultpfp.jpg' %>">
               <img src="<%= contact.avatar || 'images/defaultpfp.jpg' %>" alt="<%= contact.first_name %> <%= contact.last_name %>" class="rounded-full w-10 h-10 mr-4">
