@@ -2277,11 +2277,6 @@ body {
     max-width: 100%;
   }
 
-  .lg\:rounded-l {
-    border-top-left-radius: 0.25rem;
-    border-bottom-left-radius: 0.25rem;
-  }
-
   .lg\:rounded-t {
     border-top-left-radius: 0.25rem;
     border-top-right-radius: 0.25rem;
