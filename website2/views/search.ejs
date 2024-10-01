@@ -10,37 +10,44 @@
 </head>
 
 <body class="bg-back flex flex-col justify-start items-center min-h-screen">
-    <!-- Navbar -->
-    <div class="navbar h-24 w-full flex flex-row justify-between items-center mb-24 bg-gradient-to-r from-maroon to-maroon-dark shadow-lg shadow-gray-600 px-4">
-        <!-- Settings Icon --> 
-         <a href="/settings">
-        <img
+    <div class="navbar fixed h-24 w-full top-0 flex flex-row justify-between items-center bg-gradient-to-r from-maroon to-maroon-dark shadow-gray-600 shadow-xl">
+      <!--settings icon--> 
+      <a href="/settings" class="object-contain object-left flex ml-8 mr-20 h-12">
+      <img
         src="https://cdn.discordapp.com/attachments/1280355262976360490/1289829540318679102/setting.png?ex=66fa3ede&is=66f8ed5e&hm=a0431fc8d07f50a621d14c1732b0d3ef68f5d1553408c150ffb660fd6fa814f7&"
-        class="object-contain object-left flex ml-8 mr-20 h-12"
-        />
-         </a>
-        <!--logo-->
-        <a href="/home" class="object-contain h-full">
-            <img 
-              src="https://cdn.discordapp.com/attachments/1286925382632865804/1290021310797189271/Dormie_app_Gray.png?ex=66faf177&is=66f99ff7&hm=08162744a28d74d86402a2a69e227a5c38003eb9ad7a1f7f0834b4fb6b8c16aa&"
-              class="object-contain h-full"
-            />
-            </a>
-        <!--text and search icon-->
-        <div class="flex flex-row">
+        class="object-contain h-full"
+      />
+      </a>
+
+      <!--logo-->
+      <a class="object-contain h-full" href="/home">
+      <img 
+        src="https://cdn.discordapp.com/attachments/1286925382632865804/1290021310797189271/Dormie_app_Gray.png?ex=66faf177&is=66f99ff7&hm=08162744a28d74d86402a2a69e227a5c38003eb9ad7a1f7f0834b4fb6b8c16aa&"
+        class="object-contain h-full"          
+      />
+      </a>
+
+      <!--text and search icon-->
+      <div class="flex flex-row">
         <a href="/search">
         <img
-            src="https://cdn.discordapp.com/attachments/1280355262976360490/1290168712434941952/Magnifying_Glass.png?ex=66fb7abf&is=66fa293f&hm=bda1474115b60cad013937e3348c359704c6cec6dc9c67886fa31112daf135cd&"
-            class="object-contain object-right mr-8 h-12"
+          src="https://cdn.discordapp.com/attachments/1280355262976360490/1290168712434941952/Magnifying_Glass.png?ex=66fb7abf&is=66fa293f&hm=bda1474115b60cad013937e3348c359704c6cec6dc9c67886fa31112daf135cd&"
+          class="object-contain object-right mr-8 h-12"
         />
         </a>
-        <a href="/chats">
+      <a href="/chats">
         <img
-            src="https://cdn.discordapp.com/attachments/1280355262976360490/1289826503818739762/communication.png?ex=66fa3c0a&is=66f8ea8a&hm=59f51764c7018fe1385d996ebb89a88666dd0810ffbe04016f40385015f1fe0e&"
-            class="object-contain object-right mr-8 h-12"
-            />
-        </a>
-        </div>
+          src="https://cdn.discordapp.com/attachments/1280355262976360490/1289826503818739762/communication.png?ex=66fa3c0a&is=66f8ea8a&hm=59f51764c7018fe1385d996ebb89a88666dd0810ffbe04016f40385015f1fe0e&"
+          class="object-contain object-right mr-8 h-12"
+        />
+      </a>
+      </div>
+      
+    </div>
+
+    <!--this space makes sure that the nav bar doesn't overlap with the elements-->
+    <div class="w-full h-30 mt-12 mb-24">
+        <h1>Pinecones!!!</h1> <!--easter egg, no one should be able to see this bc the navbar should cover it-->
     </div>
 
     <div class="bg-white p-6 rounded-lg shadow-lg text-center w-full max-w-4xl mx-4">
@@ -103,11 +110,10 @@
 
     <!-- Search Results -->
     <div class="flex flex-col items-center mt-4 w-full rounded-lg max-w-4xl mx-4">
-        <div id="searchResults" class="bg-gray-400 p-6 rounded-lg shadow-lg w-full flex flex-col items-center">
+        <div id="searchResults" class="p-6 rounded-lgw-full flex flex-col items-center">
           <!-- Results will be appended here -->
         </div>
       </div>
-
 
     <!-- JavaScript -->
     <script>

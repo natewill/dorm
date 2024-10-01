@@ -3,20 +3,23 @@
     <link href="/stylesheets/main.css" rel="stylesheet">
     <link href="/stylesheets/style.css" rel="stylesheet2">
     <body class="h-full flex flex-col bg-back">
+      <!--Navbar Wrapper-->
+      <div class="relative bg-red z-1">
         <!--Navbar-->
-        <div class="navbar fixed h-24 w-full top-0 flex flex-row justify-between items-center mb-24 bg-gradient-to-r from-maroon to-maroon-dark shadow-gray-600 shadow-xl">
+        <div class="navbar fixed h-24 w-full top-0 flex flex-row justify-between items-center mb-12 bg-gradient-to-r from-maroon to-maroon-dark shadow-gray-600 shadow-xl">
           <!--settings icon--> 
-          <a href="/settings" class="object-contain h-full"></a>
+          <a href="/settings" class="object-contain object-left flex ml-8 mr-20 h-12">
           <img
             src="https://cdn.discordapp.com/attachments/1280355262976360490/1289829540318679102/setting.png?ex=66fa3ede&is=66f8ed5e&hm=a0431fc8d07f50a621d14c1732b0d3ef68f5d1553408c150ffb660fd6fa814f7&"
-            class="object-contain object-left flex ml-8 mr-20 h-12"
+            class="object-contain h-full"
           />
+          </a>
 
           <!--logo-->
-          <a href="/home" class="object-contain h-full">
+          <a class="object-contain h-full" href="/home">
           <img 
             src="https://cdn.discordapp.com/attachments/1286925382632865804/1290021310797189271/Dormie_app_Gray.png?ex=66faf177&is=66f99ff7&hm=08162744a28d74d86402a2a69e227a5c38003eb9ad7a1f7f0834b4fb6b8c16aa&"
-            class="object-contain h-full"
+            class="object-contain h-full"          
           />
           </a>
 
@@ -37,15 +40,25 @@
           </div>
           
         </div>
+      </div>
 
         <!--Content-->
         <div class="flex flex-row justify-center space-y-24">
+          <div class="flex flex-col">
+            <!--this space makes sure that the nav bar doesn't overlap with the elements-->
+            <div class="w-full h-30 mt-12">
+              <h1>Pinecones!!!</h1> <!--easter egg, no one should be able to see this bc the navbar should cover it-->
+            </div>
+            <!--title-->
+            <div class="flex flex-row justify-center h-96 w-full mb-12 overflow-hidden bg-cover object-contain">
+              <img
+                src="https://cdn.discordapp.com/attachments/1280355262976360490/1290509366637756507/istockphoto-1185438660-612x612.jpg?ex=66fcb801&is=66fb6681&hm=b7728186d5356df1903fd90ab33b60966585c1c8688c95ae979f6379e982ca30&"
+                class="static w-full"
+                />
+              <h1 class="absolute -z-1 text-7xl font-bold mb-6">Recommended Dormies</h1>
+            </div>
             <!--Card Container-->
             <div class="mx-32 h-full flex flex-col bg-scroll space-y-12">
-              <!--space at the stop to prevent first card from get covered-->
-              <div class="bg-back mb-24 p-10">
-                  <h1 class="font-bold ">Recommended Dormies</h1>
-              </div>
                 <!--Card-->
                 <% users.forEach(function(user) { %>
                 <div class="max-w-sm w-full lg:max-w-full lg:flex shadow-gray-600 shadow-lg">
@@ -95,6 +108,7 @@
                 </div>
                 <% }) %>
             </div>
+          </div>
         </div>
     </body>
 </html>
