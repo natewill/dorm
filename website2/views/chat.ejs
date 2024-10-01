@@ -53,7 +53,7 @@
       <div class="p-4">
         <% contacts.forEach(function(contact) { %>
           <div id="<%= contact.username %>Chat" class="p-4 border-b flex items-center cursor-pointer user-chat hover:bg-gray-100" data-chat-id="<%= contact.chatId %>" data-user-id="<%= contact.username %>" data-user-name="<%= contact.first_name %> <%= contact.last_name %>" data-user-avatar="<%= contact.avatar || 'images/defaultpfp.jpg' %>">
-            <img src="<%= contact.avatar || 'images/defaultpfp.jpg' %>" alt="<%= contact.first_name %> <%= contact.last_name %>" class="rounded-full w-10 h-10 mr-4">
+            <img src="<%=  contact.uploadedFile ? '/uploads/' + contact.uploadedFile : '/images/defaultpfp.jpg' %>" alt="<%= contact.first_name %> <%= contact.last_name %>" class="rounded-full w-10 h-10 mr-4">
             <div>
               <div class="font-semibold"><%= contact.first_name %> <%= contact.last_name %></div>
               <div class="text-sm text-gray-600">Last message preview</div>
@@ -210,7 +210,7 @@
         chatElement.dataset.userAvatar = 'images/defaultpfp.jpg'; // Replace with actual avatar if available
 
         chatElement.innerHTML = `
-          <img src="images/defaultpfp.jpg" alt="${recipientUsername}" class="rounded-full w-10 h-10 mr-4">
+          <img src="/images/defaultpfp.jpg" alt="${recipientUsername}" class="rounded-full w-10 h-10 mr-4">
           <div>
             <div class="font-semibold">${recipientUsername}</div>
             <div class="text-sm text-gray-600">New chat</div>
@@ -218,7 +218,7 @@
         `;
 
         chatElement.addEventListener('click', () => {
-          switchChat(chatId, recipientUsername, 'images/defaultpfp.jpg'); // Replace with actual avatar if available
+          switchChat(chatId, recipientUsername, '/images/defaultpfp.jpg' ); // Replace with actual avatar if available
         });
 
         chatSidebar.forEach(sidebar => {
