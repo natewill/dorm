@@ -143,7 +143,7 @@
             if (results && results.length > 0) {
               results.forEach(user => {
                 // Create card element
-                const imageUrl = user.uploadedFile ? `/uploads/${user.uploadedFile}` : 'default_image_url';
+                const imageUrl = user.uploadedFile ? `/uploads/${user.uploadedFile}` : '/images/default_image_url';
                 const card = document.createElement('div');
                 card.className = "max-w-sm w-full lg:max-w-full lg:flex shadow-gray-600 shadow-lg m-4";
                 card.innerHTML = `
