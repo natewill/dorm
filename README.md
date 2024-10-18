@@ -3,7 +3,7 @@ make finding roomates better.
 
 Make an account, Tell us your hobbies
 
-<img src="https://github.com/user-attachments/assets/c6f98177-5514-48a2-8c08-2e161f027c63" alt="home" width="500" height="500"/>
+<img src="https://github.com/user-attachments/assets/c6f98177-5514-48a2-8c08-2e161f027c63" alt="home" style="text-align:center;" width="500" height="500"/>
 
 
 Get Potenial roomates, ranked by using AI
