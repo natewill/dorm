@@ -3,7 +3,6 @@ make finding roomates better.
 
 Make an account, Tell us your hobbies
 
-![home_optimized](https://github.com/user-attachments/assets/36f9284a-c191-4013-b8c4-012f8390abb4)
 <img src="https://github.com/user-attachments/assets/36f9284a-c191-4013-b8c4-012f8390abb4" alt="signup" width="500" height="500"/>
 
 
