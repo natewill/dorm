@@ -14,7 +14,7 @@ make finding roomates better.
 <img src="https://github.com/user-attachments/assets/f291225c-08fd-4bb9-99f9-44ac02be303b" alt="home" width="500" height="500"/>
 
 - Chat with dormies
-<img width="1319" alt="Screenshot 2024-10-17 at 10 39 45 PM" src="https://github.com/user-attachments/assets/349588f6-851d-4cb7-a3ac-4557f7a31777">
+<img width="1319" alt="chat" src="https://github.com/user-attachments/assets/251ee626-9189-4905-9b14-d21f29a0ba91">
 
 
 
