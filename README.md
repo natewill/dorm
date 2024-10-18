@@ -1,3 +1,4 @@
+![Dormie_Logo_Gray](https://github.com/user-attachments/assets/fad9ce04-505c-49ac-9d2e-313c9ba6723f)
 make finding roomates better.
 # dormie
 
