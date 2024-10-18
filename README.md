@@ -1,4 +1,3 @@
-![se_optimized](https://github.com/user-attachments/assets/f291225c-08fd-4bb9-99f9-44ac02be303b)
 make finding roomates better.
 # dormie
 
