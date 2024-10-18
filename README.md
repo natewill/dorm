@@ -2,10 +2,10 @@ make finding roomates better.
 # dormie
 
 Make an account, Tell us your hobbies
-https://github.com/user-attachments/assets/42816748-66e3-4928-95cb-1a7dcf8376da
+![signup](https://github.com/user-attachments/assets/5bb19893-a75e-49a1-ab8e-440bdb16707f)
 
 Get Potenial roomates, ranked by using AI
-https://github.com/user-attachments/assets/e56b7d0d-f0b6-4532-8d40-0f481f9dccf5
+![home](https://github.com/user-attachments/assets/30429f5f-0fec-4958-86bf-86ac51f68632)
 
 Search by Interests
 https://github.com/user-attachments/assets/2922615b-ea96-4853-b578-0e34e69ad8b3
