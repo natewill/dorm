@@ -3,12 +3,11 @@ make finding roomates better.
 
 Make an account, Tell us your hobbies
 
-<img src="https://github.com/user-attachments/assets/36f9284a-c191-4013-b8c4-012f8390abb4" alt="signup" width="500" height="500"/>
 
 
 Get Potenial roomates, ranked by using AI
 
-![home](https://github.com/user-attachments/assets/30429f5f-0fec-4958-86bf-86ac51f68632)
+<img src="https://github.com/user-attachments/assets/36f9284a-c191-4013-b8c4-012f8390abb4" alt="home" width="500" height="500"/>
 
 Search by Interests
 https://github.com/user-attachments/assets/2922615b-ea96-4853-b578-0e34e69ad8b3
