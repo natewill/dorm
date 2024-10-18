@@ -1,6 +1,5 @@
-![Dormie_Logo_Gray](https://github.com/user-attachments/assets/fad9ce04-505c-49ac-9d2e-313c9ba6723f)
+<img src="https://github.com/user-attachments/assets/fad9ce04-505c-49ac-9d2e-313c9ba6723f" alt="logo"  style="display: block; margin: 0 auto" width="500" height="500"/>
 make finding roomates better.
-# dormie
 
 - Make an account, Tell us your hobbies
 
