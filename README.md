@@ -3,6 +3,9 @@
 make finding roomates better.
 </p>
 <p align="center">
+Nate Williams, Jamie Osmena, Alex Ibache, Jessie Lin
+</p>
+<p align="center">
 - Make an account, Tell us your hobbies
 </p>
 <p align="center">
