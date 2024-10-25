@@ -4,7 +4,7 @@ make finding roomates better.
 </p>
 
 <p align="center">
-Nate Williams, Jamie Osmena, Alex Ibache, Jessie Lin
+Nate Williams, Jamie Osmena, Alex Ibache, Jessie Lin<br>
   <a href="dormievt.com">dormievt.com</a>
 </p>
 <p align="center">
