@@ -1,11 +1,13 @@
-<p align="center">
+<p align="center"><br>
 <img src="https://github.com/user-attachments/assets/fad9ce04-505c-49ac-9d2e-313c9ba6723f" alt="logo"  style="display: block; margin: 0 auto" width="250"/><br>
 make finding roomates better.
 </p>
 
 <p align="center">
-Nate Williams, Jamie Osmena, Alex Ibache, Jessie Lin<br>
   <a href="dormievt.com">dormievt.com</a>
+</p>
+<p align="center">
+Nate Williams, Jamie Osmena, Alex Ibache, Jessie Lin
 </p>
 <p align="center">
 - Make an account, Tell us your hobbies
